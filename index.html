@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BROOLYKID Protocol</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+  </head>
+  <body>
+    <canvas id="hero-canvas"></canvas>
+
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="nav-logo">
+          <span class="brand-label">BROOLYKID</span>
+        </div>
+        <ul class="nav-menu">
+          <li><a class="nav-link" href="#hero">Vision</a></li>
+          <li><a class="nav-link" href="#vision">Piliers</a></li>
+          <li><a class="nav-link" href="#phases">Phases</a></li>
+          <li><a class="nav-link" href="#evidence">Données</a></li>
+          <li><a class="nav-link" href="#immersion">Expérience</a></li>
+          <li><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
+        <div class="hamburger">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+      </div>
+    </nav>
+
+    <main>
+      <section id="hero" class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+          <div class="hero-intro">
+            <span class="eyebrow">Protocole d'éveil générationnel</span>
+            <h1>
+              Transmuter la lignée pour accueillir une conscience nouvelle
+            </h1>
+            <p>
+              Inspiré par la recherche scientifique et les traditions
+              ancestrales, le protocole BROOLYKID synchronise biologique,
+              émotionnel et spirituel afin de préparer l'enfant à vibrer avec
+              clarté, souveraineté et amour radical.
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#phases">Explorer les phases</a>
+              <a class="btn btn-ghost" href="#evidence">Voir les preuves</a>
+            </div>
+          </div>
+          <div class="hero-points">
+            <div class="point-card">
+              <span class="point-label">01</span>
+              <p>Connexion spirituelle au cœur de chaque étape éducative.</p>
+            </div>
+            <div class="point-card">
+              <span class="point-label">02</span>
+              <p>
+                Alignement quantique des terrains biologiques et vibratoires.
+              </p>
+            </div>
+            <div class="point-card">
+              <span class="point-label">03</span>
+              <p>
+                Transmission consciente pour honorer l'ADN familial et
+                galactique.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="scroll-indicator">
+          <span>Scroll</span>
+          <div class="scroll-arrow"></div>
+        </div>
+      </section>
+
+      <section id="vision" class="section vision">
+        <div class="container">
+          <div class="section-header">
+            <span class="eyebrow">Vision holistique</span>
+            <h2>Un pont entre science, esprit et mémoire cellulaire</h2>
+            <p>
+              BROOLYKID accompagne les familles à travers un voyage complet :
+              purification des terrains, activation des capacités sensorielles,
+              et création d'un environnement vibratoire cohérent pour permettre
+              à l'enfant de se déployer avec conscience.
+            </p>
+          </div>
+          <div class="vision-grid">
+            <article class="vision-card">
+              <h3>Science incarnée</h3>
+              <p>
+                Détoxiﬁcation biologique, nutrition quantique et optimisation du
+                microbiome soutenues par des études longitudinales, pour un
+                terrain clair et souverain dès la préconception.
+              </p>
+            </article>
+            <article class="vision-card">
+              <h3>Spiritualité pragmatique</h3>
+              <p>
+                Interface télépathique mère-enfant, rituels de passage et
+                géométries vibratoires pour enraciner la conscience dans le
+                corps et nourrir l'intuition quotidienne.
+              </p>
+            </article>
+            <article class="vision-card">
+              <h3>Mémoire ancestrale</h3>
+              <p>
+                Harmonisation de la lignée, activation de l'ADN et transmission
+                d'intentions claires pour que l'enfant porte la sagesse de sa
+                famille tout en incarnant sa propre mission.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="phases" class="section phases">
+        <div class="container">
+          <div class="section-header">
+            <span class="eyebrow">Architecture du protocole</span>
+            <h2>Huit phases pour ouvrir le champ de la conscience</h2>
+            <p>
+              Chaque étape canalise des pratiques précises afin de recalibrer
+              les corps physique, émotionnel et énergétique. Sélectionnez une
+              phase pour découvrir les activations clés.
+            </p>
+          </div>
+          <div class="phases-layout">
+            <div class="phase-list" id="phaseList"></div>
+            <div class="phase-detail" id="phaseDetail">
+              <div class="phase-detail-header">
+                <span class="phase-tag"></span>
+                <h3></h3>
+                <p class="phase-timeline"></p>
+              </div>
+              <p class="phase-description"></p>
+              <ul class="phase-points"></ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="evidence" class="section evidence">
+        <div class="container">
+          <div class="section-header">
+            <span class="eyebrow">Résonnance mesurée</span>
+            <h2>Des données qui valident l'intuition</h2>
+            <p>
+              Les études internationales confirment l'impact des pratiques
+              vibratoires et spirituelles sur le développement intégral de
+              l'enfant.
+            </p>
+          </div>
+          <div class="stats-grid">
+            <div class="stat-card">
+              <span class="stat-value">-40%</span>
+              <p>
+                Troubles comportementaux chez les enfants élevés avec une
+                dimension spirituelle.
+              </p>
+              <span class="stat-source">Étude Notre Dame 2003-2020</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-value">+60%</span>
+              <p>
+                Résilience émotionnelle grâce à une hygiène énergétique
+                quotidienne.
+              </p>
+              <span class="stat-source"
+                >Child Development Perspectives 2020</span
+              >
+            </div>
+            <div class="stat-card">
+              <span class="stat-value">432 Hz</span>
+              <p>
+                Fréquence de calibration utilisée pour stabiliser le système
+                nerveux et les cycles de sommeil.
+              </p>
+              <span class="stat-source">Journal of Moral Education 2019</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-value">7 ans</span>
+              <p>
+                Période clé où le cerveau reste ultra plastique pour intégrer
+                langage sacré et géométrie sonore.
+              </p>
+              <span class="stat-source"
+                >Harvard Center on the Developing Child 2021</span
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="immersion" class="section immersion">
+        <div class="container">
+          <div class="section-header">
+            <span class="eyebrow">Expérience sensorielle</span>
+            <h2>Un écosystème vivant pour toute la famille</h2>
+            <p>
+              Le protocole se vit comme une immersion progressive :
+              purification, création de l'espace sacré, puis programmation
+              vibratoire. Chaque module peut être modulé selon la réalité du
+              foyer.
+            </p>
+          </div>
+          <div class="immersion-grid">
+            <article class="immersion-card">
+              <h3>Terrain & biologie</h3>
+              <ul>
+                <li>
+                  Détoxiﬁcation foie, reins, lymphe et activation de la
+                  méthylation.
+                </li>
+                <li>
+                  Nutrition quantique : oméga intelligents, plasma marin,
+                  chlorophylle.
+                </li>
+                <li>Protection EMF et optimisation lumière solaire D3/K2.</li>
+              </ul>
+            </article>
+            <article class="immersion-card">
+              <h3>Vibration & sonorités</h3>
+              <ul>
+                <li>
+                  Immersions sonores 432 Hz, bain de bols et chant parental.
+                </li>
+                <li>
+                  Massages sacrés, stimulation vestibulaire et points du
+                  thalamus.
+                </li>
+                <li>
+                  Respirations arc-en-ciel et yoga doux pour réguler les cycles.
+                </li>
+              </ul>
+            </article>
+            <article class="immersion-card">
+              <h3>Transmission & rituels</h3>
+              <ul>
+                <li>Cérémonies de passage, ancrage et reconnaissance d'âme.</li>
+                <li>
+                  Journal de rêves lucides, mandalas géométriques, jeu de
+                  l'aura.
+                </li>
+                <li>
+                  Intégration forest school et nutrition instinctive
+                  saisonnière.
+                </li>
+              </ul>
+            </article>
+          </div>
+          <blockquote class="immersion-quote">
+            « Nous incarnons l'âme guerrière de nos ancêtres. Chercher le
+            confort n'est pas l'objectif : nous sommes faits pour apprendre,
+            nous dépasser et mériter chaque nouveau jour. »
+          </blockquote>
+        </div>
+      </section>
+
+      <section id="contact" class="section contact">
+        <div class="container">
+          <div class="contact-inner">
+            <div class="contact-copy">
+              <span class="eyebrow">Activation collective</span>
+              <h2>Prêt·e à activer BROOLYKID dans votre lignée&nbsp;?</h2>
+              <p>
+                Nous co-créons des parcours sur mesure pour les familles,
+                praticiens et communautés qui souhaitent honorer l'enfant comme
+                un être cosmique. Partagez votre intention et lançons le cercle.
+              </p>
+            </div>
+            <div class="contact-actions">
+              <a class="btn btn-primary" href="mailto:contact@broolykid.com"
+                >Écrire au cercle</a
+              >
+              <a class="btn btn-ghost" href="#hero">Revenir au sommet</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <span class="brand-label">BROOLYKID</span>
+          <div class="footer-links">
+            <a href="#vision">Vision</a>
+            <a href="#phases">Phases</a>
+            <a href="#evidence">Données</a>
+            <a href="#contact">Contact</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r152/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
