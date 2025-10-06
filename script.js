@@ -450,7 +450,7 @@ function initThreeScene() {
       [1.0, 0.86, 0.35], // Yellow
       [0.38, 0.87, 0.72], // Green
       [0.41, 0.62, 1.0], // Blue
-      [0.78, 0.4, 1.0], // Purple
+      [0.78, 0.40, 1.0], // Purple
     ];
     const [r, g, b] = rainbowColors[colorIndex];
     colors[i3] = r;
@@ -460,10 +460,7 @@ function initThreeScene() {
     sizes[i] = Math.random() * 0.08 + 0.02;
   }
 
-  starGeometry.setAttribute(
-    "position",
-    new THREE.BufferAttribute(positions, 3),
-  );
+  starGeometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
   starGeometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
   starGeometry.setAttribute("size", new THREE.BufferAttribute(sizes, 1));
 
@@ -524,7 +521,7 @@ function initThreeScene() {
       [1.0, 0.86, 0.35], // Yellow
       [0.38, 0.87, 0.72], // Green
       [0.41, 0.62, 1.0], // Blue
-      [0.78, 0.4, 1.0], // Purple
+      [0.78, 0.40, 1.0], // Purple
     ];
     const [r, g, b] = rainbowColors[colorIndex];
     particleColors[i3] = r;
@@ -532,14 +529,8 @@ function initThreeScene() {
     particleColors[i3 + 2] = b;
   }
 
-  particleGeometry.setAttribute(
-    "position",
-    new THREE.BufferAttribute(particlePositions, 3),
-  );
-  particleGeometry.setAttribute(
-    "color",
-    new THREE.BufferAttribute(particleColors, 3),
-  );
+  particleGeometry.setAttribute("position", new THREE.BufferAttribute(particlePositions, 3));
+  particleGeometry.setAttribute("color", new THREE.BufferAttribute(particleColors, 3));
 
   const particleMaterial = new THREE.PointsMaterial({
     size: 0.02,
@@ -619,10 +610,8 @@ function initThreeScene() {
 
     // Make particles respond to mouse movement
     const mouseInfluence = 0.1;
-    particles.rotation.y +=
-      (targetRotation.y * mouseInfluence - particles.rotation.y) * 0.01;
-    particles.rotation.x +=
-      (targetRotation.x * mouseInfluence - particles.rotation.x) * 0.01;
+    particles.rotation.y += (targetRotation.y * mouseInfluence - particles.rotation.y) * 0.01;
+    particles.rotation.x += (targetRotation.x * mouseInfluence - particles.rotation.x) * 0.01;
 
     // Update noise shader
     noiseUniforms.uTime.value = elapsed;
@@ -937,7 +926,7 @@ const translations = {
     phases: "Architecture du protocole",
     evidence: "Résonnance mesurée",
     immersion: "Expérience sensorielle",
-    contact: "Activation collective",
+    contact: "Activation collective"
   },
   en: {
     title: "BROOLYKID Protocol",
@@ -946,7 +935,7 @@ const translations = {
     phases: "Protocol Architecture",
     evidence: "Measured Resonance",
     immersion: "Sensory Experience",
-    contact: "Collective Activation",
+    contact: "Collective Activation"
   },
   ar: {
     title: "بروتوكول بروليكيد",
@@ -955,7 +944,7 @@ const translations = {
     phases: "هندسة البروتوكول",
     evidence: "رنين مقيس",
     immersion: "تجربة حسية",
-    contact: "تفعيل جماعي",
+    contact: "تفعيل جماعي"
   },
   he: {
     title: "פרוטוקול ברוליקיד",
@@ -964,7 +953,7 @@ const translations = {
     phases: "ארכיטקטורת הפרוטוקול",
     evidence: "תהודה נמדדת",
     immersion: "חוויה חושית",
-    contact: "הפעלה קולקטיבית",
+    contact: "הפעלה קולקטיבית"
   },
   es: {
     title: "Protocolo BROOLYKID",
@@ -973,7 +962,7 @@ const translations = {
     phases: "Arquitectura del protocolo",
     evidence: "Resonancia medida",
     immersion: "Experiencia sensorial",
-    contact: "Activación colectiva",
+    contact: "Activación colectiva"
   },
   fa: {
     title: "پروتکل برولیکید",
@@ -982,8 +971,8 @@ const translations = {
     phases: "معماری پروتکل",
     evidence: "رزونانس اندازه‌گیری شده",
     immersion: "تجربه حسی",
-    contact: "فعال‌سازی جمعی",
-  },
+    contact: "فعال‌سازی جمعی"
+  }
 };
 
 // PDF Generation functionality
@@ -1012,6 +1001,7 @@ function initPDFGenerator() {
         statusDiv.textContent = "";
         statusDiv.className = "pdf-status";
       }, 3000);
+
     } catch (error) {
       console.error("PDF generation error:", error);
       statusDiv.className = "pdf-status error";
@@ -1113,11 +1103,11 @@ function setupFontsForLanguage(doc, language) {
   // For RTL languages, we would need special handling
   // For now, we'll use standard fonts that support most characters
   switch (language) {
-    case "ar":
-    case "fa":
+    case 'ar':
+    case 'fa':
       // Arabic and Farsi are RTL languages - would need special handling
       break;
-    case "he":
+    case 'he':
       // Hebrew is RTL - would need special handling
       break;
     default:
@@ -1133,7 +1123,7 @@ function getVisionText(language) {
     ar: "يرافق بروليكيد العائلات عبر رحلة شاملة: تنقية التربة، وتفعيل القدرات الحسية، وخلق بيئة اهتزازية متماسكة للسماح للطفل بالتطور بوعي.",
     he: "ברוליקיד מלווה משפחות במסע מלא: טיהור השטח, הפעלת יכולות חושיות, ויצירת סביבה ויברציונית קוהרנטית לאפשר לילד להתפתח במודעות.",
     es: "BROOLYKID acompaña a las familias a través de un viaje completo: purificación del terreno, activación de capacidades sensoriales, y creación de un entorno vibratorio coherente para permitir que el niño se despliegue con conciencia.",
-    fa: "برولیکید خانواده‌ها را در یک سفر کامل همراهی می‌کند: پاکسازی زمین، فعال‌سازی ظرفیت‌های حسی، و ایجاد محیط ارتعاشی منسجم برای اجازه دادن به کودک برای گسترش با آگاهی.",
+    fa: "برولیکید خانواده‌ها را در یک سفر کامل همراهی می‌کند: پاکسازی زمین، فعال‌سازی ظرفیت‌های حسی، و ایجاد محیط ارتعاشی منسجم برای اجازه دادن به کودک برای گسترش با آگاهی."
   };
   return texts[language] || texts.fr;
 }
@@ -1145,7 +1135,7 @@ function getEvidenceText(language) {
     ar: "تؤكد الدراسات الدولية تأثير الممارسات الاهتزازية والروحية على التطور المتكامل للطفل. تظهر البيانات انخفاضًا بنسبة 40% في الاضطرابات السلوكية وزيادة بنسبة 60% في المرونة العاطفية.",
     he: "מחקרים בינלאומיים מאשרים את ההשפעה של פרקטיקות ויברציוניות ורוחניות על ההתפתחות האינטגרלית של הילד. הנתונים מראים ירידה של 40% בהפרעות התנהגותיות ועלייה של 60% בחוסן הרגשי.",
     es: "Los estudios internacionales confirman el impacto de las prácticas vibratorias y espirituales en el desarrollo integral del niño. Los datos muestran una reducción del 40% en los trastornos conductuales y un aumento del 60% en la resiliencia emocional.",
-    fa: "مطالعات بین‌المللی تأثیر تمرینات ارتعاشی و معنوی بر رشد یکپارچه کودک را تأیید می‌کند. داده‌ها کاهش 40% در اختلالات رفتاری و افزایش 60% در تاب‌آوری عاطفی را نشان می‌دهد.",
+    fa: "مطالعات بین‌المللی تأثیر تمرینات ارتعاشی و معنوی بر رشد یکپارچه کودک را تأیید می‌کند. داده‌ها کاهش 40% در اختلالات رفتاری و افزایش 60% در تاب‌آوری عاطفی را نشان می‌دهد."
   };
   return texts[language] || texts.fr;
 }

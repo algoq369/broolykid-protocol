@@ -22,45 +22,33 @@ html {
   --surface-ghost: rgba(15, 21, 38, 0.45);
   --border-strong: rgba(255, 255, 255, 0.24);
   --border-soft: rgba(255, 255, 255, 0.14);
-  --accent-gradient: linear-gradient(
-    120deg,
-    rgb(var(--color-1)) 0%,
-    rgb(var(--color-3)) 35%,
-    rgb(var(--color-5)) 65%,
-    rgb(var(--color-6)) 100%
-  );
-  --accent-gradient-alt: linear-gradient(
-    120deg,
-    rgb(var(--color-4)) 0%,
-    rgb(var(--color-6)) 100%
-  );
+  --accent-gradient: linear-gradient(120deg,
+      rgb(var(--color-1)) 0%,
+      rgb(var(--color-3)) 35%,
+      rgb(var(--color-5)) 65%,
+      rgb(var(--color-6)) 100%);
+  --accent-gradient-alt: linear-gradient(120deg,
+      rgb(var(--color-4)) 0%,
+      rgb(var(--color-6)) 100%);
 }
 
 body {
   font-family: "Inter", sans-serif;
   color: rgb(var(--text-primary));
   background:
-    radial-gradient(
-      circle at 16% 18%,
+    radial-gradient(circle at 16% 18%,
       rgba(var(--color-1), 0.24),
-      transparent 32%
-    ),
-    radial-gradient(
-      circle at 82% 12%,
+      transparent 32%),
+    radial-gradient(circle at 82% 12%,
       rgba(var(--color-5), 0.22),
-      transparent 38%
-    ),
-    radial-gradient(
-      circle at 26% 78%,
+      transparent 38%),
+    radial-gradient(circle at 26% 78%,
       rgba(var(--color-3), 0.16),
-      transparent 44%
-    ),
-    linear-gradient(
-      180deg,
+      transparent 44%),
+    linear-gradient(180deg,
       rgba(4, 7, 19, 1) 0%,
       rgba(6, 12, 26, 1) 58%,
-      rgba(4, 6, 16, 1) 100%
-    );
+      rgba(4, 6, 16, 1) 100%);
   overflow-x: hidden;
 }
 
@@ -184,16 +172,12 @@ main {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(
-      circle at 30% 40%,
+    radial-gradient(circle at 30% 40%,
       rgba(var(--color-4), 0.22),
-      transparent 45%
-    ),
-    radial-gradient(
-      circle at 80% 30%,
+      transparent 45%),
+    radial-gradient(circle at 80% 30%,
       rgba(var(--color-5), 0.18),
-      transparent 50%
-    );
+      transparent 50%);
   z-index: 0;
   overflow: hidden;
 }
@@ -203,17 +187,13 @@ main {
   position: absolute;
   inset: -20%;
   background:
-    conic-gradient(
-      from 0deg,
+    conic-gradient(from 0deg,
       rgba(var(--color-5), 0.12),
       rgba(var(--color-4), 0.07),
-      transparent 70%
-    ),
-    radial-gradient(
-      circle at 70% 20%,
+      transparent 70%),
+    radial-gradient(circle at 70% 20%,
       rgba(255, 255, 255, 0.07),
-      transparent 55%
-    );
+      transparent 55%);
   animation: haloSpin 18s linear infinite;
   mix-blend-mode: screen;
 }
@@ -309,9 +289,7 @@ main {
   border-radius: 18px;
   padding: 1.6rem;
   backdrop-filter: blur(22px);
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   animation: float 6s ease-in-out infinite;
 }
 
@@ -365,6 +343,7 @@ main {
 }
 
 @keyframes scrollBounce {
+
   0%,
   100% {
     transform: translateX(0) rotate(45deg);
@@ -408,6 +387,7 @@ main {
 }
 
 @keyframes float {
+
   0%,
   100% {
     transform: translateY(0px);
@@ -419,6 +399,7 @@ main {
 }
 
 @keyframes pulse {
+
   0%,
   100% {
     opacity: 0.8;
@@ -450,9 +431,7 @@ main {
   align-items: center;
   justify-content: center;
   z-index: 9999;
-  transition:
-    opacity 0.5s ease,
-    visibility 0.5s ease;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
 }
 
 #loading-screen.hidden {
@@ -549,12 +528,10 @@ main {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.1),
-    transparent
-  );
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.1),
+      transparent);
   transition: left 0.5s ease;
 }
 
@@ -583,11 +560,9 @@ main {
 
 .phases {
   background:
-    radial-gradient(
-      circle at 12% 18%,
+    radial-gradient(circle at 12% 18%,
       rgba(var(--color-2), 0.12),
-      transparent 50%
-    ),
+      transparent 50%),
     rgba(3, 7, 18, 0.85);
 }
 
@@ -753,11 +728,9 @@ main {
 }
 
 .immersion {
-  background: linear-gradient(
-    180deg,
-    rgba(5, 11, 26, 0.82) 0%,
-    rgba(10, 20, 44, 0.94) 100%
-  );
+  background: linear-gradient(180deg,
+      rgba(5, 11, 26, 0.82) 0%,
+      rgba(10, 20, 44, 0.94) 100%);
 }
 
 .immersion-grid {
@@ -803,11 +776,9 @@ main {
 }
 
 .pdf-generator {
-  background: linear-gradient(
-    135deg,
-    rgba(5, 11, 26, 0.85) 0%,
-    rgba(10, 20, 44, 0.95) 100%
-  );
+  background: linear-gradient(135deg,
+      rgba(5, 11, 26, 0.85) 0%,
+      rgba(10, 20, 44, 0.95) 100%);
 }
 
 .pdf-generator-content {
@@ -878,12 +849,12 @@ main {
   transition: all 0.3s ease;
 }
 
-.checkbox-label input[type="checkbox"]:checked + .checkmark {
+.checkbox-label input[type="checkbox"]:checked+.checkmark {
   background: var(--accent-gradient);
   border-color: transparent;
 }
 
-.checkbox-label input[type="checkbox"]:checked + .checkmark::after {
+.checkbox-label input[type="checkbox"]:checked+.checkmark::after {
   content: "✓";
   position: absolute;
   top: 50%;
@@ -1044,6 +1015,7 @@ main {
 }
 
 @media (max-width: 768px) {
+
   /* Disable heavy animations on mobile for better performance */
   .point-card {
     animation: none;
