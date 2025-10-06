@@ -450,7 +450,7 @@ function initThreeScene() {
       [1.0, 0.86, 0.35], // Yellow
       [0.38, 0.87, 0.72], // Green
       [0.41, 0.62, 1.0], // Blue
-      [0.78, 0.4, 1.0], // Purple
+      [0.78, 0.40, 1.0], // Purple
     ];
     const [r, g, b] = rainbowColors[colorIndex];
     colors[i3] = r;
@@ -460,10 +460,7 @@ function initThreeScene() {
     sizes[i] = Math.random() * 0.08 + 0.02;
   }
 
-  starGeometry.setAttribute(
-    "position",
-    new THREE.BufferAttribute(positions, 3),
-  );
+  starGeometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
   starGeometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
   starGeometry.setAttribute("size", new THREE.BufferAttribute(sizes, 1));
 
@@ -524,7 +521,7 @@ function initThreeScene() {
       [1.0, 0.86, 0.35], // Yellow
       [0.38, 0.87, 0.72], // Green
       [0.41, 0.62, 1.0], // Blue
-      [0.78, 0.4, 1.0], // Purple
+      [0.78, 0.40, 1.0], // Purple
     ];
     const [r, g, b] = rainbowColors[colorIndex];
     particleColors[i3] = r;
@@ -532,14 +529,8 @@ function initThreeScene() {
     particleColors[i3 + 2] = b;
   }
 
-  particleGeometry.setAttribute(
-    "position",
-    new THREE.BufferAttribute(particlePositions, 3),
-  );
-  particleGeometry.setAttribute(
-    "color",
-    new THREE.BufferAttribute(particleColors, 3),
-  );
+  particleGeometry.setAttribute("position", new THREE.BufferAttribute(particlePositions, 3));
+  particleGeometry.setAttribute("color", new THREE.BufferAttribute(particleColors, 3));
 
   const particleMaterial = new THREE.PointsMaterial({
     size: 0.02,
@@ -587,15 +578,26 @@ function initThreeScene() {
       mesh.position.y += Math.sin(elapsed * 0.6 + noiseOffset) * 0.0025;
     });
 
-    // Animate floating orbs
+    // Animate floating orbs with enhanced morphing effects
     scene.children.forEach((child) => {
       if (child.userData && child.userData.speed) {
         const { speed, direction } = child.userData;
-        child.position.x += Math.cos(direction + elapsed * speed) * 0.001;
-        child.position.y += Math.sin(direction + elapsed * speed * 1.3) * 0.001;
-        child.position.z += Math.cos(direction + elapsed * speed * 0.7) * 0.001;
-        child.rotation.x += speed * 0.5;
-        child.rotation.y += speed * 0.8;
+        child.position.x += Math.cos(direction + elapsed * speed) * 0.002;
+        child.position.y += Math.sin(direction + elapsed * speed * 1.3) * 0.002;
+        child.position.z += Math.cos(direction + elapsed * speed * 0.7) * 0.002;
+        child.rotation.x += speed * 0.8;
+        child.rotation.y += speed * 1.2;
+        child.rotation.z += speed * 0.3;
+        
+        // Add morphing scale effects like igloo.inc
+        const morphScale = 1 + Math.sin(elapsed * speed * 2) * 0.15;
+        child.scale.setScalar(morphScale);
+        
+        // Add dynamic color shifting
+        if (child.material && child.material.color) {
+          const hue = (elapsed * 0.1 + direction) % 1;
+          child.material.color.setHSL(hue, 0.8, 0.7);
+        }
       }
     });
 
@@ -613,16 +615,24 @@ function initThreeScene() {
     const twinkle = Math.sin(elapsed * 2) * 0.1 + 0.8;
     starMaterial.opacity = twinkle;
 
-    // Animate interactive particles
-    particles.rotation.y += 0.0002;
-    particles.rotation.x += 0.0001;
+    // Animate interactive particles with enhanced effects
+    particles.rotation.y += 0.0005;
+    particles.rotation.x += 0.0003;
+    particles.rotation.z += 0.0002;
 
-    // Make particles respond to mouse movement
-    const mouseInfluence = 0.1;
-    particles.rotation.y +=
-      (targetRotation.y * mouseInfluence - particles.rotation.y) * 0.01;
-    particles.rotation.x +=
-      (targetRotation.x * mouseInfluence - particles.rotation.x) * 0.01;
+    // Make particles respond to mouse movement with more dramatic effects
+    const mouseInfluence = 0.2;
+    particles.rotation.y += (targetRotation.y * mouseInfluence - particles.rotation.y) * 0.02;
+    particles.rotation.x += (targetRotation.x * mouseInfluence - particles.rotation.x) * 0.02;
+    
+    // Add morphing effects to particles
+    const particleMorph = 1 + Math.sin(elapsed * 3) * 0.1;
+    particles.scale.setScalar(particleMorph);
+    
+    // Add dynamic opacity changes
+    if (particles.material) {
+      particles.material.opacity = 0.7 + Math.sin(elapsed * 2) * 0.2;
+    }
 
     // Update noise shader
     noiseUniforms.uTime.value = elapsed;
@@ -654,55 +664,80 @@ function setupScrollMotion({
     return;
   gsap.registerPlugin(ScrollTrigger);
 
-  // Create dramatic igloo.inc-style scroll timeline
-  const master = gsap.timeline({ defaults: { ease: "none" } });
+  // Create dramatic igloo.inc-style scroll timeline with more fluid animations
+  const master = gsap.timeline({ defaults: { ease: "power2.out" } });
 
-  // Hero section - dramatic camera zoom and rotation
+  // Hero section - dramatic camera zoom and rotation (igloo.inc style)
   master.to(camera.position, {
-    z: 4.5,
-    y: 1.2,
-    x: 0.8,
+    z: 3.2,
+    y: 2.1,
+    x: 1.4,
     scrollTrigger: {
       trigger: "#hero",
       start: "top top",
+      end: "bottom top",
+      scrub: 0.5,
+    },
+  });
+
+  master.to(camera.rotation, {
+    x: -0.25,
+    y: 0.2,
+    scrollTrigger: {
+      trigger: "#hero",
+      start: "top top",
+      end: "bottom top",
+      scrub: 0.7,
+    },
+  });
+
+  // Add dramatic field of view changes like igloo.inc
+  master.to(camera, {
+    fov: 75,
+    scrollTrigger: {
+      trigger: "#hero",
+      start: "top top",
+      end: "bottom top",
+      scrub: 0.6,
+      onUpdate: () => camera.updateProjectionMatrix(),
+    },
+  });
+
+  // Vision section - massive transformation with morphing effects
+  master.to(coreGroup.rotation, {
+    y: () => coreGroup.rotation.y + Math.PI * 3.2,
+    x: () => coreGroup.rotation.x - Math.PI * 0.6,
+    z: () => coreGroup.rotation.z + Math.PI * 1.2,
+    scrollTrigger: {
+      trigger: "#vision",
+      start: "top bottom",
       end: "bottom top",
       scrub: 0.8,
     },
   });
 
-  master.to(camera.rotation, {
-    x: -0.15,
-    y: 0.1,
+  master.to(coreGroup.scale, {
+    x: 1.8,
+    y: 1.8,
+    z: 1.8,
     scrollTrigger: {
-      trigger: "#hero",
-      start: "top top",
+      trigger: "#vision",
+      start: "top bottom",
       end: "bottom top",
       scrub: 1.0,
     },
   });
 
-  // Vision section - massive transformation
-  master.to(coreGroup.rotation, {
-    y: () => coreGroup.rotation.y + Math.PI * 2.5,
-    x: () => coreGroup.rotation.x - Math.PI * 0.4,
-    z: () => coreGroup.rotation.z + Math.PI * 0.8,
+  // Add dramatic position changes like igloo.inc
+  master.to(coreGroup.position, {
+    y: 0.8,
+    x: 0.5,
+    z: -0.3,
     scrollTrigger: {
       trigger: "#vision",
       start: "top bottom",
       end: "bottom top",
-      scrub: 1.2,
-    },
-  });
-
-  master.to(coreGroup.scale, {
-    x: 1.3,
-    y: 1.3,
-    z: 1.3,
-    scrollTrigger: {
-      trigger: "#vision",
-      start: "top bottom",
-      end: "bottom top",
-      scrub: 1.5,
+      scrub: 0.9,
     },
   });
 
@@ -910,19 +945,108 @@ function setupScrollMotion({
     });
   });
 
-  // Add dramatic scale animations to individual elements
+  // Add dramatic scale animations to individual elements with morphing
   floatingGroup.children.forEach((mesh, index) => {
     gsap.to(mesh.scale, {
-      x: 1.5,
-      y: 1.5,
-      z: 1.5,
+      x: 2.2,
+      y: 2.2,
+      z: 2.2,
       scrollTrigger: {
         trigger: "#evidence",
         start: "top 80%",
         end: "bottom top",
-        scrub: 1.0 + index * 0.1,
+        scrub: 0.8 + index * 0.1,
       },
     });
+
+    // Add individual rotation effects like igloo.inc
+    gsap.to(mesh.rotation, {
+      x: Math.PI * 2,
+      y: Math.PI * 1.5,
+      z: Math.PI * 0.8,
+      scrollTrigger: {
+        trigger: "#evidence",
+        start: "top 80%",
+        end: "bottom top",
+        scrub: 1.2 + index * 0.15,
+      },
+    });
+  });
+
+  // Add morphing effects to particles
+  if (typeof particles !== "undefined") {
+    gsap.to(particles.material, {
+      opacity: 0.9,
+      scrollTrigger: {
+        trigger: "#phases",
+        start: "top center",
+        end: "bottom top",
+        scrub: 1.0,
+      },
+    });
+
+    gsap.to(particles.rotation, {
+      y: Math.PI * 2,
+      x: Math.PI * 0.5,
+      scrollTrigger: {
+        trigger: "#phases",
+        start: "top center",
+        end: "bottom top",
+        scrub: 1.5,
+      },
+    });
+  }
+
+  // Add dramatic lighting changes like igloo.inc
+  const lights = scene.children.filter(child => child.isLight);
+  lights.forEach((light, index) => {
+    gsap.to(light, {
+      intensity: 2.5,
+      scrollTrigger: {
+        trigger: "#immersion",
+        start: "top bottom",
+        end: "bottom top",
+        scrub: 1.0 + index * 0.2,
+      },
+    });
+  });
+
+  // Add dramatic fog effects like igloo.inc
+  if (scene.fog) {
+    gsap.to(scene.fog, {
+      near: 0.1,
+      far: 50,
+      scrollTrigger: {
+        trigger: "#phases",
+        start: "top center",
+        end: "bottom top",
+        scrub: 1.0,
+      },
+    });
+  }
+
+  // Add dramatic renderer effects
+  gsap.to(renderer, {
+    toneMappingExposure: 2.0,
+    scrollTrigger: {
+      trigger: "#evidence",
+      start: "top center",
+      end: "bottom top",
+      scrub: 1.0,
+    },
+  });
+
+  // Add dramatic camera shake effects like igloo.inc
+  gsap.to(camera.position, {
+    x: "+=0.1",
+    y: "+=0.05",
+    scrollTrigger: {
+      trigger: "#phases",
+      start: "top center",
+      end: "bottom top",
+      scrub: 0.3,
+      ease: "power2.inOut",
+    },
   });
 
   ScrollTrigger.refresh();
@@ -937,7 +1061,7 @@ const translations = {
     phases: "Architecture du protocole",
     evidence: "Résonnance mesurée",
     immersion: "Expérience sensorielle",
-    contact: "Activation collective",
+    contact: "Activation collective"
   },
   en: {
     title: "BROOLYKID Protocol",
@@ -946,7 +1070,7 @@ const translations = {
     phases: "Protocol Architecture",
     evidence: "Measured Resonance",
     immersion: "Sensory Experience",
-    contact: "Collective Activation",
+    contact: "Collective Activation"
   },
   ar: {
     title: "بروتوكول بروليكيد",
@@ -955,7 +1079,7 @@ const translations = {
     phases: "هندسة البروتوكول",
     evidence: "رنين مقيس",
     immersion: "تجربة حسية",
-    contact: "تفعيل جماعي",
+    contact: "تفعيل جماعي"
   },
   he: {
     title: "פרוטוקול ברוליקיד",
@@ -964,7 +1088,7 @@ const translations = {
     phases: "ארכיטקטורת הפרוטוקול",
     evidence: "תהודה נמדדת",
     immersion: "חוויה חושית",
-    contact: "הפעלה קולקטיבית",
+    contact: "הפעלה קולקטיבית"
   },
   es: {
     title: "Protocolo BROOLYKID",
@@ -973,7 +1097,7 @@ const translations = {
     phases: "Arquitectura del protocolo",
     evidence: "Resonancia medida",
     immersion: "Experiencia sensorial",
-    contact: "Activación colectiva",
+    contact: "Activación colectiva"
   },
   fa: {
     title: "پروتکل برولیکید",
@@ -982,8 +1106,8 @@ const translations = {
     phases: "معماری پروتکل",
     evidence: "رزونانس اندازه‌گیری شده",
     immersion: "تجربه حسی",
-    contact: "فعال‌سازی جمعی",
-  },
+    contact: "فعال‌سازی جمعی"
+  }
 };
 
 // PDF Generation functionality
@@ -1012,6 +1136,7 @@ function initPDFGenerator() {
         statusDiv.textContent = "";
         statusDiv.className = "pdf-status";
       }, 3000);
+
     } catch (error) {
       console.error("PDF generation error:", error);
       statusDiv.className = "pdf-status error";
@@ -1026,20 +1151,21 @@ function initPDFGenerator() {
 }
 
 async function generatePDF(language, includeImages, includePhases) {
-  // Check if jsPDF is available
-  if (typeof window.jsPDF === "undefined") {
-    // Try to load jsPDF dynamically
-    await loadScript(
-      "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js",
-    );
-  }
+  try {
+    // Check if jsPDF is available
+    if (typeof window.jsPDF === "undefined") {
+      // Try to load jsPDF dynamically
+      await loadScript("https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js");
+      // Wait a bit for the library to initialize
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    }
 
-  if (typeof window.jsPDF === "undefined") {
-    throw new Error("jsPDF library could not be loaded");
-  }
+    if (typeof window.jsPDF === "undefined") {
+      throw new Error("jsPDF library could not be loaded");
+    }
 
-  const { jsPDF } = window.jsPDF;
-  const doc = new jsPDF();
+    const { jsPDF } = window.jsPDF;
+    const doc = new jsPDF();
 
   // Set up fonts for different languages
   setupFontsForLanguage(doc, language);
@@ -1112,20 +1238,59 @@ async function generatePDF(language, includeImages, includePhases) {
   const evidenceLines = doc.splitTextToSize(evidenceText, 170);
   doc.text(evidenceLines, 20, yPosition);
 
-  // Save the PDF
-  const fileName = `BROOLYKID_Protocol_${language.toUpperCase()}.pdf`;
-  doc.save(fileName);
+    // Save the PDF
+    const fileName = `BROOLYKID_Protocol_${language.toUpperCase()}.pdf`;
+    doc.save(fileName);
+    
+  } catch (error) {
+    console.error("PDF generation error:", error);
+    // Fallback: create a simple text-based PDF
+    await generateSimplePDF(language, includeImages, includePhases);
+  }
+}
+
+// Fallback PDF generation function
+async function generateSimplePDF(language, includeImages, includePhases) {
+  const translation = translations[language] || translations.fr;
+  const content = `
+BROOLYKID PROTOCOL - ${translation.title}
+
+${translation.subtitle}
+
+${translation.vision}
+${getVisionText(language)}
+
+${translation.phases}
+${phases.map(phase => `${phase.label}: ${phase.title}\n${phase.description}`).join('\n\n')}
+
+${translation.evidence}
+${getEvidenceText(language)}
+
+---
+Généré le ${new Date().toLocaleDateString()}
+  `;
+  
+  // Create a simple text file download
+  const blob = new Blob([content], { type: 'text/plain' });
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `BROOLYKID_Protocol_${language.toUpperCase()}.txt`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  window.URL.revokeObjectURL(url);
 }
 
 function setupFontsForLanguage(doc, language) {
   // For RTL languages, we would need special handling
   // For now, we'll use standard fonts that support most characters
   switch (language) {
-    case "ar":
-    case "fa":
+    case 'ar':
+    case 'fa':
       // Arabic and Farsi are RTL languages - would need special handling
       break;
-    case "he":
+    case 'he':
       // Hebrew is RTL - would need special handling
       break;
     default:
@@ -1141,7 +1306,7 @@ function getVisionText(language) {
     ar: "يرافق بروليكيد العائلات عبر رحلة شاملة: تنقية التربة، وتفعيل القدرات الحسية، وخلق بيئة اهتزازية متماسكة للسماح للطفل بالتطور بوعي.",
     he: "ברוליקיד מלווה משפחות במסע מלא: טיהור השטח, הפעלת יכולות חושיות, ויצירת סביבה ויברציונית קוהרנטית לאפשר לילד להתפתח במודעות.",
     es: "BROOLYKID acompaña a las familias a través de un viaje completo: purificación del terreno, activación de capacidades sensoriales, y creación de un entorno vibratorio coherente para permitir que el niño se despliegue con conciencia.",
-    fa: "برولیکید خانواده‌ها را در یک سفر کامل همراهی می‌کند: پاکسازی زمین، فعال‌سازی ظرفیت‌های حسی، و ایجاد محیط ارتعاشی منسجم برای اجازه دادن به کودک برای گسترش با آگاهی.",
+    fa: "برولیکید خانواده‌ها را در یک سفر کامل همراهی می‌کند: پاکسازی زمین، فعال‌سازی ظرفیت‌های حسی، و ایجاد محیط ارتعاشی منسجم برای اجازه دادن به کودک برای گسترش با آگاهی."
   };
   return texts[language] || texts.fr;
 }
@@ -1153,7 +1318,7 @@ function getEvidenceText(language) {
     ar: "تؤكد الدراسات الدولية تأثير الممارسات الاهتزازية والروحية على التطور المتكامل للطفل. تظهر البيانات انخفاضًا بنسبة 40% في الاضطرابات السلوكية وزيادة بنسبة 60% في المرونة العاطفية.",
     he: "מחקרים בינלאומיים מאשרים את ההשפעה של פרקטיקות ויברציוניות ורוחניות על ההתפתחות האינטגרלית של הילד. הנתונים מראים ירידה של 40% בהפרעות התנהגותיות ועלייה של 60% בחוסן הרגשי.",
     es: "Los estudios internacionales confirman el impacto de las prácticas vibratorias y espirituales en el desarrollo integral del niño. Los datos muestran una reducción del 40% en los trastornos conductuales y un aumento del 60% en la resiliencia emocional.",
-    fa: "مطالعات بین‌المللی تأثیر تمرینات ارتعاشی و معنوی بر رشد یکپارچه کودک را تأیید می‌کند. داده‌ها کاهش 40% در اختلالات رفتاری و افزایش 60% در تاب‌آوری عاطفی را نشان می‌دهد.",
+    fa: "مطالعات بین‌المللی تأثیر تمرینات ارتعاشی و معنوی بر رشد یکپارچه کودک را تأیید می‌کند. داده‌ها کاهش 40% در اختلالات رفتاری و افزایش 60% در تاب‌آوری عاطفی را نشان می‌دهد."
   };
   return texts[language] || texts.fr;
 }
@@ -1161,7 +1326,7 @@ function getEvidenceText(language) {
 // Utility function to load scripts dynamically
 function loadScript(src) {
   return new Promise((resolve, reject) => {
-    const script = document.createElement("script");
+    const script = document.createElement('script');
     script.src = src;
     script.onload = resolve;
     script.onerror = reject;
@@ -1195,17 +1360,13 @@ function collectFormData() {
     location: document.getElementById("location").value,
     climate: document.getElementById("climate").value,
     familyStructure: document.getElementById("family-structure").value,
-    interests: Array.from(
-      document.querySelectorAll('input[type="checkbox"]:checked'),
-    ).map((cb) => cb.value),
-    challenges: document.getElementById("challenges").value,
+    interests: Array.from(document.querySelectorAll('input[type="checkbox"]:checked')).map(cb => cb.value),
+    challenges: document.getElementById("challenges").value
   };
 }
 
 function validateFormData(data) {
-  return (
-    data.childName && data.age && data.location && data.interests.length > 0
-  );
+  return data.childName && data.age && data.location && data.interests.length > 0;
 }
 
 function generatePersonalizedProgram(data) {
@@ -1213,7 +1374,7 @@ function generatePersonalizedProgram(data) {
     recommendedPhases: getRecommendedPhases(data),
     environmentalAdvice: getEnvironmentalAdvice(data),
     dailyPractices: getDailyPractices(data),
-    specialConsiderations: getSpecialConsiderations(data),
+    specialConsiderations: getSpecialConsiderations(data)
   };
   return program;
 }
@@ -1226,48 +1387,42 @@ function getRecommendedPhases(data) {
     case "preconception":
       phases.push({
         title: "Phase Alpha - Fondation préconceptionnelle",
-        description:
-          "Purification du terrain parental et préparation vibratoire pour l'âme à venir.",
-        priority: "high",
+        description: "Purification du terrain parental et préparation vibratoire pour l'âme à venir.",
+        priority: "high"
       });
       break;
     case "pregnancy":
       phases.push({
         title: "Phase Bêta - Grossesse sacrée",
-        description:
-          "Interface télépathique mère-enfant et création d'un environnement vibratoire cohérent.",
-        priority: "high",
+        description: "Interface télépathique mère-enfant et création d'un environnement vibratoire cohérent.",
+        priority: "high"
       });
       break;
     case "0-6months":
       phases.push({
         title: "Phase Charlie - Naissance sacrée",
-        description:
-          "Accueil de l'âme souveraine et ancrage de l'empreinte vibratoire du foyer.",
-        priority: "high",
+        description: "Accueil de l'âme souveraine et ancrage de l'empreinte vibratoire du foyer.",
+        priority: "high"
       });
       phases.push({
         title: "Phase Delta - Fondation quantique",
-        description:
-          "Stabilisation des systèmes organiques et vibratoires pour un atterrissage doux.",
-        priority: "medium",
+        description: "Stabilisation des systèmes organiques et vibratoires pour un atterrissage doux.",
+        priority: "medium"
       });
       break;
     case "6-12months":
       phases.push({
         title: "Phase Echo - Programmation fondamentale",
-        description:
-          "Sculpture de la neuro-perception par le toucher, le son et la cohérence émotionnelle.",
-        priority: "high",
+        description: "Sculpture de la neuro-perception par le toucher, le son et la cohérence émotionnelle.",
+        priority: "high"
       });
       break;
     case "1-2years":
     case "2-3years":
       phases.push({
         title: "Phase Foxtrot - Conscience élargie",
-        description:
-          "Éveil du mouvement libre, de la géométrie du vivant et de l'immunité instinctive.",
-        priority: "high",
+        description: "Éveil du mouvement libre, de la géométrie du vivant et de l'immunité instinctive.",
+        priority: "high"
       });
       break;
     case "3-5years":
@@ -1275,15 +1430,13 @@ function getRecommendedPhases(data) {
     case "7+":
       phases.push({
         title: "Phase Golf - Développement avancé",
-        description:
-          "Accompagnement dans la mission créative avec activation du langage sacré et de l'intuition.",
-        priority: "high",
+        description: "Accompagnement dans la mission créative avec activation du langage sacré et de l'intuition.",
+        priority: "high"
       });
       phases.push({
         title: "Phase Hotel - Intégration vibratoire",
-        description:
-          "Unification des apprentissages en un mode de vie sacré évolutif.",
-        priority: "medium",
+        description: "Unification des apprentissages en un mode de vie sacré évolutif.",
+        priority: "medium"
       });
       break;
   }
@@ -1292,18 +1445,16 @@ function getRecommendedPhases(data) {
   if (data.interests.includes("spiritual")) {
     phases.push({
       title: "Activation spirituelle renforcée",
-      description:
-        "Pratiques de méditation adaptées à l'âge et rituels de connexion sacrée.",
-      priority: "medium",
+      description: "Pratiques de méditation adaptées à l'âge et rituels de connexion sacrée.",
+      priority: "medium"
     });
   }
 
   if (data.interests.includes("physical")) {
     phases.push({
       title: "Optimisation physique",
-      description:
-        "Nutrition quantique et exercices de développement moteur harmonieux.",
-      priority: "medium",
+      description: "Nutrition quantique et exercices de développement moteur harmonieux.",
+      priority: "medium"
     });
   }
 
@@ -1319,32 +1470,28 @@ function getEnvironmentalAdvice(data) {
       advice.push({
         icon: "fas fa-city",
         title: "Purification urbaine",
-        content:
-          "Utilisez des plantes purificatrices d'air et des cristaux pour neutraliser les pollutions électromagnétiques urbaines.",
+        content: "Utilisez des plantes purificatrices d'air et des cristaux pour neutraliser les pollutions électromagnétiques urbaines."
       });
       break;
     case "rural":
       advice.push({
         icon: "fas fa-tree",
         title: "Connexion naturelle",
-        content:
-          "Profitez de l'environnement naturel pour des bains de forêt quotidiens et une connexion directe avec les éléments.",
+        content: "Profitez de l'environnement naturel pour des bains de forêt quotidiens et une connexion directe avec les éléments."
       });
       break;
     case "coastal":
       advice.push({
         icon: "fas fa-water",
         title: "Thérapie marine",
-        content:
-          "Utilisez l'air marin riche en ions négatifs et les bains de mer pour renforcer le système immunitaire.",
+        content: "Utilisez l'air marin riche en ions négatifs et les bains de mer pour renforcer le système immunitaire."
       });
       break;
     case "mountain":
       advice.push({
         icon: "fas fa-mountain",
         title: "Énergie tellurique",
-        content:
-          "Connectez-vous aux énergies telluriques des montagnes pour un ancrage profond et une élévation spirituelle.",
+        content: "Connectez-vous aux énergies telluriques des montagnes pour un ancrage profond et une élévation spirituelle."
       });
       break;
   }
@@ -1355,16 +1502,14 @@ function getEnvironmentalAdvice(data) {
       advice.push({
         icon: "fas fa-sun",
         title: "Gestion de la chaleur",
-        content:
-          "Adaptez les pratiques aux heures fraîches et utilisez l'hydratation naturelle pour maintenir l'équilibre.",
+        content: "Adaptez les pratiques aux heures fraîches et utilisez l'hydratation naturelle pour maintenir l'équilibre."
       });
       break;
     case "arctic":
       advice.push({
         icon: "fas fa-snowflake",
         title: "Adaptation au froid",
-        content:
-          "Renforcez les pratiques de chaleur interne et utilisez la lumière artificielle pour compenser le manque de soleil.",
+        content: "Renforcez les pratiques de chaleur interne et utilisez la lumière artificielle pour compenser le manque de soleil."
       });
       break;
   }
@@ -1380,8 +1525,7 @@ function getDailyPractices(data) {
     practices.push({
       icon: "fas fa-heart",
       title: "Méditation parentale",
-      content:
-        "15 minutes de méditation quotidienne pour créer un espace sacré d'accueil.",
+      content: "15 minutes de méditation quotidienne pour créer un espace sacré d'accueil."
     });
   }
 
@@ -1389,8 +1533,7 @@ function getDailyPractices(data) {
     practices.push({
       icon: "fas fa-baby",
       title: "Massage énergétique",
-      content:
-        "Massage doux quotidien avec huiles essentielles adaptées pour renforcer le lien parent-enfant.",
+      content: "Massage doux quotidien avec huiles essentielles adaptées pour renforcer le lien parent-enfant."
     });
   }
 
@@ -1398,8 +1541,7 @@ function getDailyPractices(data) {
     practices.push({
       icon: "fas fa-music",
       title: "Sonothérapie",
-      content:
-        "Écoute de fréquences 432Hz et chant parental pour développer l'oreille musicale.",
+      content: "Écoute de fréquences 432Hz et chant parental pour développer l'oreille musicale."
     });
   }
 
@@ -1408,8 +1550,7 @@ function getDailyPractices(data) {
     practices.push({
       icon: "fas fa-om",
       title: "Rituel spirituel",
-      content:
-        "Création d'un espace sacré avec cristaux et rituels adaptés à l'âge de l'enfant.",
+      content: "Création d'un espace sacré avec cristaux et rituels adaptés à l'âge de l'enfant."
     });
   }
 
@@ -1417,8 +1558,7 @@ function getDailyPractices(data) {
     practices.push({
       icon: "fas fa-running",
       title: "Mouvement conscient",
-      content:
-        "Exercices de yoga adaptés et jeux de mouvement pour développer la coordination.",
+      content: "Exercices de yoga adaptés et jeux de mouvement pour développer la coordination."
     });
   }
 
@@ -1426,8 +1566,7 @@ function getDailyPractices(data) {
     practices.push({
       icon: "fas fa-palette",
       title: "Expression créative",
-      content:
-        "Temps quotidien pour l'art, la musique et l'expression libre de la créativité.",
+      content: "Temps quotidien pour l'art, la musique et l'expression libre de la créativité."
     });
   }
 
@@ -1440,39 +1579,28 @@ function getSpecialConsiderations(data) {
   // Family structure considerations
   switch (data.familyStructure) {
     case "single-parent":
-      considerations +=
-        "• Renforcez le réseau de soutien avec des figures d'attachement multiples.\n";
-      considerations +=
-        "• Créez des rituels de connexion adaptés à votre situation familiale.\n\n";
+      considerations += "• Renforcez le réseau de soutien avec des figures d'attachement multiples.\n";
+      considerations += "• Créez des rituels de connexion adaptés à votre situation familiale.\n\n";
       break;
     case "extended":
-      considerations +=
-        "• Utilisez la richesse de la famille élargie pour transmettre les traditions.\n";
-      considerations +=
-        "• Établissez des rôles clairs pour chaque membre de la famille.\n\n";
+      considerations += "• Utilisez la richesse de la famille élargie pour transmettre les traditions.\n";
+      considerations += "• Établissez des rôles clairs pour chaque membre de la famille.\n\n";
       break;
   }
 
   // Challenge-based considerations
   if (data.challenges) {
-    considerations +=
-      "• Considérez les défis spécifiques mentionnés dans votre approche personnalisée.\n";
-    considerations +=
-      "• Adaptez le rythme des pratiques selon les besoins particuliers de votre enfant.\n\n";
+    considerations += "• Considérez les défis spécifiques mentionnés dans votre approche personnalisée.\n";
+    considerations += "• Adaptez le rythme des pratiques selon les besoins particuliers de votre enfant.\n\n";
   }
 
   // Age-specific considerations
   if (["3-5years", "5-7years", "7+"].includes(data.age)) {
-    considerations +=
-      "• Encouragez l'autonomie progressive dans les pratiques.\n";
-    considerations +=
-      "• Intégrez les apprentissages dans le jeu et l'exploration naturelle.\n";
+    considerations += "• Encouragez l'autonomie progressive dans les pratiques.\n";
+    considerations += "• Intégrez les apprentissages dans le jeu et l'exploration naturelle.\n";
   }
 
-  return (
-    considerations ||
-    "• Adaptez le programme selon l'évolution de votre enfant.\n• Restez flexible et à l'écoute des besoins changeants."
-  );
+  return considerations || "• Adaptez le programme selon l'évolution de votre enfant.\n• Restez flexible et à l'écoute des besoins changeants.";
 }
 
 function displayProgramResults(program, childName) {
@@ -1487,7 +1615,7 @@ function displayProgramResults(program, childName) {
   const phasesContainer = document.getElementById("phase-recommendations");
   if (phasesContainer) {
     phasesContainer.innerHTML = "";
-    program.recommendedPhases.forEach((phase) => {
+    program.recommendedPhases.forEach(phase => {
       const phaseCard = document.createElement("div");
       phaseCard.className = "phase-card";
       phaseCard.innerHTML = `
@@ -1502,7 +1630,7 @@ function displayProgramResults(program, childName) {
   const adviceContainer = document.getElementById("environmental-tips");
   if (adviceContainer) {
     adviceContainer.innerHTML = "";
-    program.environmentalAdvice.forEach((advice) => {
+    program.environmentalAdvice.forEach(advice => {
       const adviceCard = document.createElement("div");
       adviceCard.className = "advice-card";
       adviceCard.innerHTML = `
@@ -1520,7 +1648,7 @@ function displayProgramResults(program, childName) {
   const practicesContainer = document.getElementById("daily-practices-list");
   if (practicesContainer) {
     practicesContainer.innerHTML = "";
-    program.dailyPractices.forEach((practice) => {
+    program.dailyPractices.forEach(practice => {
       const practiceItem = document.createElement("div");
       practiceItem.className = "practice-item";
       practiceItem.innerHTML = `
@@ -1535,14 +1663,9 @@ function displayProgramResults(program, childName) {
   }
 
   // Display special considerations
-  const considerationsContainer = document.getElementById(
-    "special-considerations-content",
-  );
+  const considerationsContainer = document.getElementById("special-considerations-content");
   if (considerationsContainer) {
-    considerationsContainer.innerHTML = program.specialConsiderations.replace(
-      /\n/g,
-      "<br>",
-    );
+    considerationsContainer.innerHTML = program.specialConsiderations.replace(/\n/g, '<br>');
   }
 
   // Show results
