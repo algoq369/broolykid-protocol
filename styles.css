@@ -22,33 +22,45 @@ html {
   --surface-ghost: rgba(15, 21, 38, 0.45);
   --border-strong: rgba(255, 255, 255, 0.24);
   --border-soft: rgba(255, 255, 255, 0.14);
-  --accent-gradient: linear-gradient(120deg,
-      rgb(var(--color-1)) 0%,
-      rgb(var(--color-3)) 35%,
-      rgb(var(--color-5)) 65%,
-      rgb(var(--color-6)) 100%);
-  --accent-gradient-alt: linear-gradient(120deg,
-      rgb(var(--color-4)) 0%,
-      rgb(var(--color-6)) 100%);
+  --accent-gradient: linear-gradient(
+    120deg,
+    rgb(var(--color-1)) 0%,
+    rgb(var(--color-3)) 35%,
+    rgb(var(--color-5)) 65%,
+    rgb(var(--color-6)) 100%
+  );
+  --accent-gradient-alt: linear-gradient(
+    120deg,
+    rgb(var(--color-4)) 0%,
+    rgb(var(--color-6)) 100%
+  );
 }
 
 body {
   font-family: "Inter", sans-serif;
   color: rgb(var(--text-primary));
   background:
-    radial-gradient(circle at 16% 18%,
+    radial-gradient(
+      circle at 16% 18%,
       rgba(var(--color-1), 0.24),
-      transparent 32%),
-    radial-gradient(circle at 82% 12%,
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 82% 12%,
       rgba(var(--color-5), 0.22),
-      transparent 38%),
-    radial-gradient(circle at 26% 78%,
+      transparent 38%
+    ),
+    radial-gradient(
+      circle at 26% 78%,
       rgba(var(--color-3), 0.16),
-      transparent 44%),
-    linear-gradient(180deg,
+      transparent 44%
+    ),
+    linear-gradient(
+      180deg,
       rgba(4, 7, 19, 1) 0%,
       rgba(6, 12, 26, 1) 58%,
-      rgba(4, 6, 16, 1) 100%);
+      rgba(4, 6, 16, 1) 100%
+    );
   overflow-x: hidden;
 }
 
@@ -172,12 +184,16 @@ main {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 30% 40%,
+    radial-gradient(
+      circle at 30% 40%,
       rgba(var(--color-4), 0.22),
-      transparent 45%),
-    radial-gradient(circle at 80% 30%,
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 80% 30%,
       rgba(var(--color-5), 0.18),
-      transparent 50%);
+      transparent 50%
+    );
   z-index: 0;
   overflow: hidden;
 }
@@ -187,13 +203,17 @@ main {
   position: absolute;
   inset: -20%;
   background:
-    conic-gradient(from 0deg,
+    conic-gradient(
+      from 0deg,
       rgba(var(--color-5), 0.12),
       rgba(var(--color-4), 0.07),
-      transparent 70%),
-    radial-gradient(circle at 70% 20%,
+      transparent 70%
+    ),
+    radial-gradient(
+      circle at 70% 20%,
       rgba(255, 255, 255, 0.07),
-      transparent 55%);
+      transparent 55%
+    );
   animation: haloSpin 18s linear infinite;
   mix-blend-mode: screen;
 }
@@ -289,7 +309,9 @@ main {
   border-radius: 18px;
   padding: 1.6rem;
   backdrop-filter: blur(22px);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
   animation: float 6s ease-in-out infinite;
 }
 
@@ -343,7 +365,6 @@ main {
 }
 
 @keyframes scrollBounce {
-
   0%,
   100% {
     transform: translateX(0) rotate(45deg);
@@ -387,7 +408,6 @@ main {
 }
 
 @keyframes float {
-
   0%,
   100% {
     transform: translateY(0px);
@@ -399,7 +419,6 @@ main {
 }
 
 @keyframes pulse {
-
   0%,
   100% {
     opacity: 0.8;
@@ -431,7 +450,9 @@ main {
   align-items: center;
   justify-content: center;
   z-index: 9999;
-  transition: opacity 0.5s ease, visibility 0.5s ease;
+  transition:
+    opacity 0.5s ease,
+    visibility 0.5s ease;
 }
 
 #loading-screen.hidden {
@@ -528,10 +549,12 @@ main {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg,
-      transparent,
-      rgba(255, 255, 255, 0.1),
-      transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
   transition: left 0.5s ease;
 }
 
@@ -560,9 +583,11 @@ main {
 
 .phases {
   background:
-    radial-gradient(circle at 12% 18%,
+    radial-gradient(
+      circle at 12% 18%,
       rgba(var(--color-2), 0.12),
-      transparent 50%),
+      transparent 50%
+    ),
     rgba(3, 7, 18, 0.85);
 }
 
@@ -728,9 +753,11 @@ main {
 }
 
 .immersion {
-  background: linear-gradient(180deg,
-      rgba(5, 11, 26, 0.82) 0%,
-      rgba(10, 20, 44, 0.94) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(5, 11, 26, 0.82) 0%,
+    rgba(10, 20, 44, 0.94) 100%
+  );
 }
 
 .immersion-grid {
@@ -776,9 +803,11 @@ main {
 }
 
 .pdf-generator {
-  background: linear-gradient(135deg,
-      rgba(5, 11, 26, 0.85) 0%,
-      rgba(10, 20, 44, 0.95) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(5, 11, 26, 0.85) 0%,
+    rgba(10, 20, 44, 0.95) 100%
+  );
 }
 
 .pdf-generator-content {
@@ -849,12 +878,12 @@ main {
   transition: all 0.3s ease;
 }
 
-.checkbox-label input[type="checkbox"]:checked+.checkmark {
+.checkbox-label input[type="checkbox"]:checked + .checkmark {
   background: var(--accent-gradient);
   border-color: transparent;
 }
 
-.checkbox-label input[type="checkbox"]:checked+.checkmark::after {
+.checkbox-label input[type="checkbox"]:checked + .checkmark::after {
   content: "✓";
   position: absolute;
   top: 50%;
@@ -900,6 +929,305 @@ main {
   background: rgba(var(--color-1), 0.1);
   color: rgb(var(--color-1));
   border: 1px solid rgba(var(--color-1), 0.3);
+}
+
+.kids-generator {
+  background: linear-gradient(
+    135deg,
+    rgba(6, 12, 24, 0.9) 0%,
+    rgba(10, 20, 44, 0.95) 100%
+  );
+}
+
+.generator-content {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.generator-form {
+  background: var(--surface-strong);
+  border: 1px solid var(--border-soft);
+  border-radius: 24px;
+  padding: 3rem;
+  backdrop-filter: blur(18px);
+  margin-bottom: 2rem;
+}
+
+.form-section {
+  margin-bottom: 2.5rem;
+}
+
+.form-section h3 {
+  font-size: 1.4rem;
+  margin-bottom: 1.5rem;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.8rem;
+  color: rgb(var(--text-primary));
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 1rem 1.2rem;
+  border: 1px solid var(--border-soft);
+  border-radius: 12px;
+  background: var(--surface-soft);
+  color: rgb(var(--text-primary));
+  font-size: 1rem;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: rgba(var(--color-5), 0.5);
+  box-shadow: 0 0 0 3px rgba(var(--color-5), 0.1);
+}
+
+.form-group textarea {
+  min-height: 100px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+.checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.generator-btn {
+  width: 100%;
+  padding: 1.2rem 2rem;
+  font-size: 1.1rem;
+  margin-top: 1rem;
+}
+
+.generator-btn i {
+  margin-right: 0.5rem;
+}
+
+.program-results {
+  background: var(--surface-strong);
+  border: 1px solid var(--border-soft);
+  border-radius: 24px;
+  padding: 3rem;
+  backdrop-filter: blur(18px);
+  transition: all 0.5s ease;
+}
+
+.program-results.hidden {
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+}
+
+.results-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.results-header h3 {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.results-subtitle {
+  color: rgb(var(--text-secondary));
+  font-size: 1rem;
+}
+
+.results-content {
+  display: grid;
+  gap: 2rem;
+}
+
+.recommended-phases,
+.environmental-advice,
+.daily-practices,
+.special-considerations {
+  background: rgba(6, 12, 28, 0.6);
+  border: 1px solid var(--border-soft);
+  border-radius: 16px;
+  padding: 1.5rem;
+}
+
+.recommended-phases h4,
+.environmental-advice h4,
+.daily-practices h4,
+.special-considerations h4 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: rgb(var(--text-primary));
+}
+
+.phase-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.phase-card {
+  background: var(--surface-soft);
+  border: 1px solid var(--border-soft);
+  border-radius: 12px;
+  padding: 1.2rem;
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.phase-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(var(--color-5), 0.5);
+}
+
+.phase-card h5 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: rgb(var(--color-4));
+}
+
+.phase-card p {
+  font-size: 0.9rem;
+  color: rgb(var(--text-secondary));
+  line-height: 1.5;
+}
+
+.advice-cards {
+  display: grid;
+  gap: 1rem;
+}
+
+.advice-card {
+  background: var(--surface-soft);
+  border: 1px solid var(--border-soft);
+  border-radius: 12px;
+  padding: 1.2rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.advice-card i {
+  color: rgb(var(--color-3));
+  font-size: 1.2rem;
+  margin-top: 0.2rem;
+}
+
+.advice-card-content h6 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: rgb(var(--text-primary));
+}
+
+.advice-card-content p {
+  font-size: 0.9rem;
+  color: rgb(var(--text-secondary));
+  line-height: 1.5;
+}
+
+.practices-list {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.practice-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--surface-soft);
+  border: 1px solid var(--border-soft);
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+}
+
+.practice-item:hover {
+  transform: translateX(5px);
+}
+
+.practice-item i {
+  color: rgb(var(--color-4));
+  font-size: 1.1rem;
+}
+
+.practice-item-content h6 {
+  font-size: 1rem;
+  margin-bottom: 0.3rem;
+  color: rgb(var(--text-primary));
+}
+
+.practice-item-content p {
+  font-size: 0.9rem;
+  color: rgb(var(--text-secondary));
+}
+
+.considerations-content {
+  color: rgb(var(--text-secondary));
+  line-height: 1.6;
+}
+
+.results-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.results-actions .btn {
+  min-width: 180px;
+}
+
+@media (max-width: 768px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .checkbox-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .phase-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .results-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .results-actions .btn {
+    width: 100%;
+    max-width: 300px;
+  }
 }
 
 .contact {
@@ -1015,7 +1343,6 @@ main {
 }
 
 @media (max-width: 768px) {
-
   /* Disable heavy animations on mobile for better performance */
   .point-card {
     animation: none;
