@@ -421,35 +421,79 @@ function initThreeScene() {
 
   const { mesh: noisePlane, uniforms: noiseUniforms } = createNoisePlane(scene);
 
+  // Enhanced particle system with multiple layers
   const starGeometry = new THREE.BufferGeometry();
-  const starCount = 800;
+  const starCount = 1200;
   const positions = new Float32Array(starCount * 3);
   const colors = new Float32Array(starCount * 3);
+  const sizes = new Float32Array(starCount);
+
   for (let i = 0; i < starCount; i += 1) {
     const i3 = i * 3;
-    positions[i3] = (Math.random() - 0.5) * 30;
-    positions[i3 + 1] = (Math.random() - 0.5) * 28;
-    positions[i3 + 2] = (Math.random() - 0.5) * 30;
-    const tint = 0.7 + Math.random() * 0.3;
-    colors[i3] = 0.4 * tint;
-    colors[i3 + 1] = 0.8 * tint;
-    colors[i3 + 2] = 1 * tint;
+    positions[i3] = (Math.random() - 0.5) * 40;
+    positions[i3 + 1] = (Math.random() - 0.5) * 35;
+    positions[i3 + 2] = (Math.random() - 0.5) * 40;
+
+    // Rainbow color distribution
+    const colorIndex = Math.floor(Math.random() * 6);
+    const rainbowColors = [
+      [1.0, 0.41, 0.38], // Red
+      [1.0, 0.65, 0.17], // Orange
+      [1.0, 0.86, 0.35], // Yellow
+      [0.38, 0.87, 0.72], // Green
+      [0.41, 0.62, 1.0], // Blue
+      [0.78, 0.4, 1.0], // Purple
+    ];
+    const [r, g, b] = rainbowColors[colorIndex];
+    colors[i3] = r;
+    colors[i3 + 1] = g;
+    colors[i3 + 2] = b;
+
+    sizes[i] = Math.random() * 0.08 + 0.02;
   }
+
   starGeometry.setAttribute(
     "position",
     new THREE.BufferAttribute(positions, 3),
   );
   starGeometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+  starGeometry.setAttribute("size", new THREE.BufferAttribute(sizes, 1));
+
   const starMaterial = new THREE.PointsMaterial({
     size: 0.05,
     transparent: true,
-    opacity: 0.7,
+    opacity: 0.8,
     vertexColors: true,
     depthWrite: false,
     blending: THREE.AdditiveBlending,
+    sizeAttenuation: true,
   });
+
   const stars = new THREE.Points(starGeometry, starMaterial);
   scene.add(stars);
+
+  // Add floating orbs for extra depth
+  const orbGeometry = new THREE.SphereGeometry(0.15, 16, 16);
+  const orbMaterial = new THREE.MeshBasicMaterial({
+    color: 0x64ffda,
+    transparent: true,
+    opacity: 0.3,
+    blending: THREE.AdditiveBlending,
+  });
+
+  for (let i = 0; i < 15; i += 1) {
+    const orb = new THREE.Mesh(orbGeometry, orbMaterial.clone());
+    orb.position.set(
+      (Math.random() - 0.5) * 25,
+      (Math.random() - 0.5) * 20,
+      (Math.random() - 0.5) * 25,
+    );
+    orb.userData = {
+      speed: 0.002 + Math.random() * 0.003,
+      direction: Math.random() * Math.PI * 2,
+    };
+    scene.add(orb);
+  }
 
   const pointer = new THREE.Vector2();
   const targetRotation = { x: 0, y: 0 };
@@ -476,18 +520,44 @@ function initThreeScene() {
   function animate() {
     requestAnimationFrame(animate);
     const elapsed = clock.getElapsedTime();
+
+    // Animate floating geometric shapes
     floatingGroup.children.forEach((mesh) => {
       const { speed, noiseOffset } = mesh.userData;
       mesh.rotation.x += speed;
       mesh.rotation.y += speed * 1.4;
       mesh.position.y += Math.sin(elapsed * 0.6 + noiseOffset) * 0.0025;
     });
+
+    // Animate floating orbs
+    scene.children.forEach((child) => {
+      if (child.userData && child.userData.speed) {
+        const { speed, direction } = child.userData;
+        child.position.x += Math.cos(direction + elapsed * speed) * 0.001;
+        child.position.y += Math.sin(direction + elapsed * speed * 1.3) * 0.001;
+        child.position.z += Math.cos(direction + elapsed * speed * 0.7) * 0.001;
+        child.rotation.x += speed * 0.5;
+        child.rotation.y += speed * 0.8;
+      }
+    });
+
+    // Animate main elements
     halo.rotation.z += 0.0009;
     ribbon.rotation.y += 0.0008;
     haloGroup.rotation.y += (targetRotation.y - haloGroup.rotation.y) * 0.04;
     haloGroup.rotation.x += (targetRotation.x - haloGroup.rotation.x) * 0.04;
+
+    // Enhanced star field animation
     stars.rotation.y += 0.0004;
+    stars.rotation.x += 0.0001;
+
+    // Animate star opacity for twinkling effect
+    const twinkle = Math.sin(elapsed * 2) * 0.1 + 0.8;
+    starMaterial.opacity = twinkle;
+
+    // Update noise shader
     noiseUniforms.uTime.value = elapsed;
+
     renderer.render(scene, camera);
   }
 
@@ -515,29 +585,47 @@ function setupScrollMotion({
     return;
   gsap.registerPlugin(ScrollTrigger);
 
+  // Create a more sophisticated scroll timeline like igloo.inc
   const master = gsap.timeline({ defaults: { ease: "none" } });
 
+  // Hero section - initial camera movement
+  master.to(camera.position, {
+    z: 7.2,
+    y: 0.4,
+    x: 0.3,
+    scrollTrigger: {
+      trigger: "#hero",
+      start: "top top",
+      end: "bottom top",
+      scrub: 1.2,
+    },
+  });
+
+  // Vision section - dramatic rotation and color shift
   master.to(coreGroup.rotation, {
-    y: () => coreGroup.rotation.y + Math.PI * 0.8,
-    x: () => coreGroup.rotation.x - Math.PI * 0.12,
+    y: () => coreGroup.rotation.y + Math.PI * 1.2,
+    x: () => coreGroup.rotation.x - Math.PI * 0.18,
+    z: () => coreGroup.rotation.z + Math.PI * 0.3,
     scrollTrigger: {
       trigger: "#vision",
       start: "top bottom",
       end: "bottom top",
-      scrub: true,
+      scrub: 1.5,
     },
   });
 
+  // Phases section - camera dive and ribbon transformation
   master.to(
     camera.position,
     {
-      z: 6.6,
-      y: 0.2,
+      z: 5.8,
+      y: -0.2,
+      x: 0.8,
       scrollTrigger: {
         trigger: "#phases",
-        start: "top 75%",
+        start: "top 80%",
         end: "bottom top",
-        scrub: true,
+        scrub: 1.8,
       },
     },
     0,
@@ -547,59 +635,138 @@ function setupScrollMotion({
     ribbon.material,
     {
       opacity: 0.95,
-      emissiveIntensity: 0.85,
+      emissiveIntensity: 0.9,
+      color: 0xff6b61,
       scrollTrigger: {
         trigger: "#phases",
         start: "top center",
         end: "bottom top",
-        scrub: true,
+        scrub: 1.2,
       },
     },
     0,
   );
 
+  // Evidence section - floating elements dance
   master.to(
     floatingGroup.position,
     {
-      y: 0.5,
+      y: 0.8,
+      x: 0.4,
       scrollTrigger: {
         trigger: "#evidence",
         start: "top 85%",
         end: "bottom top",
-        scrub: true,
+        scrub: 1.4,
       },
     },
     0,
   );
 
+  master.to(
+    floatingGroup.rotation,
+    {
+      y: Math.PI * 0.4,
+      x: Math.PI * 0.1,
+      scrollTrigger: {
+        trigger: "#evidence",
+        start: "top 85%",
+        end: "bottom top",
+        scrub: 1.6,
+      },
+    },
+    0,
+  );
+
+  // Immersion section - halo expansion and color shift
   master.to(
     halo.scale,
     {
-      x: 1.3,
-      y: 1.3,
+      x: 1.6,
+      y: 1.6,
       scrollTrigger: {
         trigger: "#immersion",
         start: "top bottom",
-        end: "top 30%",
-        scrub: true,
+        end: "top 20%",
+        scrub: 1.3,
       },
     },
     0,
   );
 
   master.to(
+    halo.material,
+    {
+      color: 0x61ddb7,
+      opacity: 0.4,
+      scrollTrigger: {
+        trigger: "#immersion",
+        start: "top bottom",
+        end: "top 20%",
+        scrub: 1.1,
+      },
+    },
+    0,
+  );
+
+  // Noise plane intensity and color evolution
+  master.to(
     noisePlane.material.uniforms.uIntensity,
     {
-      value: 0.18,
+      value: 0.25,
       scrollTrigger: {
         trigger: "#immersion",
         start: "top 80%",
         end: "bottom top",
-        scrub: true,
+        scrub: 1.5,
       },
     },
     0,
   );
+
+  // Contact section - final camera pull back
+  master.to(
+    camera.position,
+    {
+      z: 8.5,
+      y: 0.1,
+      x: 0,
+      scrollTrigger: {
+        trigger: "#contact",
+        start: "top 90%",
+        end: "bottom top",
+        scrub: 1.2,
+      },
+    },
+    0,
+  );
+
+  // Add parallax effect to floating elements
+  floatingGroup.children.forEach((mesh, index) => {
+    gsap.to(mesh.position, {
+      y: `+=${0.5 + index * 0.1}`,
+      scrollTrigger: {
+        trigger: "body",
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 2 + index * 0.2,
+      },
+    });
+  });
+
+  // Add color transitions to floating elements
+  floatingGroup.children.forEach((mesh, index) => {
+    const colors = [0xff6b61, 0xffa62b, 0xffdb5a, 0x61ddb7, 0x689dff, 0xc867ff];
+    gsap.to(mesh.material, {
+      color: colors[index % colors.length],
+      scrollTrigger: {
+        trigger: "#phases",
+        start: "top center",
+        end: "bottom top",
+        scrub: 1.5,
+      },
+    });
+  });
 
   ScrollTrigger.refresh();
 }
