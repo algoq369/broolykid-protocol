@@ -588,11 +588,11 @@ function initThreeScene() {
         child.rotation.x += speed * 0.8;
         child.rotation.y += speed * 1.2;
         child.rotation.z += speed * 0.3;
-        
+
         // Add morphing scale effects like igloo.inc
         const morphScale = 1 + Math.sin(elapsed * speed * 2) * 0.15;
         child.scale.setScalar(morphScale);
-        
+
         // Add dynamic color shifting
         if (child.material && child.material.color) {
           const hue = (elapsed * 0.1 + direction) % 1;
@@ -624,11 +624,11 @@ function initThreeScene() {
     const mouseInfluence = 0.2;
     particles.rotation.y += (targetRotation.y * mouseInfluence - particles.rotation.y) * 0.02;
     particles.rotation.x += (targetRotation.x * mouseInfluence - particles.rotation.x) * 0.02;
-    
+
     // Add morphing effects to particles
     const particleMorph = 1 + Math.sin(elapsed * 3) * 0.1;
     particles.scale.setScalar(particleMorph);
-    
+
     // Add dynamic opacity changes
     if (particles.material) {
       particles.material.opacity = 0.7 + Math.sin(elapsed * 2) * 0.2;
@@ -1052,61 +1052,301 @@ function setupScrollMotion({
   ScrollTrigger.refresh();
 }
 
-// Multi-language content for PDF generation
+// Multi-language content for PDF generation - Real content from BROOLYKID PDF
 const translations = {
   fr: {
     title: "Protocole BROOLYKID",
-    subtitle: "Transmuter la lignée pour accueillir une conscience nouvelle",
-    vision: "Vision holistique",
-    phases: "Architecture du protocole",
-    evidence: "Résonnance mesurée",
-    immersion: "Expérience sensorielle",
-    contact: "Activation collective"
+    subtitle: "Programme Avancé de Développement de l'Enfant",
+    vision: "Ce protocole représente une approche révolutionnaire pour l'optimisation du développement humain. Il demande engagement, patience et adaptation constante, mais les résultats en termes d'éveil conscientiel et de potentiel actualisé justifient largement l'investissement.",
+    phases: [
+      {
+        id: "Alpha",
+        name: "Fondation Préconceptionnelle",
+        description: "Détoxification biologique (foie, reins, lymphe), nutrition quantique & Oméga-3 intelligents, protection énergétique & purification des ondes (EMF), pratiques de couple, héritage ancestral, activation de l'ADN, glande pinéale & vision intérieure."
+      },
+      {
+        id: "Beta", 
+        name: "Grossesse Sacrée",
+        description: "Trimestres 1 à 3 : sécurité, conscience, communication subtile, interface télépathique mère-enfant, immersion sonore, visualisation prénatale, nutrition vibratoire et hygiène énergétique."
+      },
+      {
+        id: "Charlie",
+        name: "Naissance Sacrée",
+        description: "Création d'un espace d'accueil sacré, cérémonie de passage & empreinte vibratoire, soins initiaux : colostrum, crânio-sacré, lumière rouge, présence, ancrage, reconnaissance d'âme."
+      },
+      {
+        id: "Delta",
+        name: "Fondation Quantique", 
+        description: "Développement du microbiome, massage sacré, stimulation vestibulaire, bain sonore, lumière douce & sécurité vibratoire, alignement post-naissance."
+      },
+      {
+        id: "Echo",
+        name: "Programmation Fondamentale",
+        description: "Développement sensoriel et neuro-emotionnel, nutrition par allaitement vibratoire, massage énergétique, méridiens, stimulation crânienne, harmonisation des cycles jour/nuit."
+      },
+      {
+        id: "Foxtrot",
+        name: "Conscience Élargie",
+        description: "Grille cristalline, géométrie du vivant, sonothérapie & mouvement libre, bain de nature, éveil des perceptions, soutien de l'immunité naturelle."
+      },
+      {
+        id: "Golf",
+        name: "Développement Avancé",
+        description: "Langage sacré & géométrie sonore, yoga, méditation arc-en-ciel, visualisation créative, apprentissages naturels & protocoles de jeûne doux, nutrition instinctive, activation cérébrale douce."
+      },
+      {
+        id: "Hotel",
+        name: "Intégration Vibratoire",
+        description: "Récapitulatif des étapes (Alpha à Golf), tableaux pratiques : alimentation, fréquence, soins, synthèse sacrée et intégration complète."
+      }
+    ],
+    evidence: "Hippocrate : 'Que ton aliment soit ta seule médecine et que ta médecine soit ton aliment.' Maître Omraam Mikhaël Aïvanhov : 'La nourriture est une lettre d'amour que nous envoie le Créateur.' Neuroplasticité et jeûne : Le jeûne intermittent chez l'enfant augmente la production de BDNF favorisant la connexion spirituelle.",
+    methodology: "Nous incarnons des milliers d'années d'évolution humaine, porteurs de l'âme guerrière de nos ancêtres. Ces systèmes de récompense humains sont gravés profondément dans notre ADN. Camaraderie, amour, famille, amitié, lutte, dépassement de soi, apprentissage - tous ces éléments sont essentiels."
   },
   en: {
     title: "BROOLYKID Protocol",
-    subtitle: "Transmute the lineage to welcome a new consciousness",
-    vision: "Holistic Vision",
-    phases: "Protocol Architecture",
-    evidence: "Measured Resonance",
-    immersion: "Sensory Experience",
-    contact: "Collective Activation"
+    subtitle: "Advanced Child Development Program", 
+    vision: "This protocol represents a revolutionary approach to human development optimization. It requires commitment, patience and constant adaptation, but the results in terms of conscious awakening and actualized potential largely justify the investment.",
+    phases: [
+      {
+        id: "Alpha",
+        name: "Preconception Foundation",
+        description: "Biological detoxification (liver, kidneys, lymph), quantum nutrition & intelligent Omega-3s, energetic protection & EMF purification, couple practices, ancestral heritage, DNA activation, pineal gland & inner vision."
+      },
+      {
+        id: "Beta",
+        name: "Sacred Pregnancy", 
+        description: "Trimesters 1-3: security, consciousness, subtle communication, mother-child telepathic interface, sound immersion, prenatal visualization, vibrational nutrition and energetic hygiene."
+      },
+      {
+        id: "Charlie",
+        name: "Sacred Birth",
+        description: "Creation of a sacred welcoming space, passage ceremony & vibrational imprint, initial care: colostrum, cranio-sacral, red light, presence, anchoring, soul recognition."
+      },
+      {
+        id: "Delta",
+        name: "Quantum Foundation",
+        description: "Microbiome development, sacred massage, vestibular stimulation, sound bath, soft light & vibrational security, post-birth alignment."
+      },
+      {
+        id: "Echo", 
+        name: "Fundamental Programming",
+        description: "Sensory and neuro-emotional development, vibrational breastfeeding nutrition, energetic massage, meridians, cranial stimulation, day/night cycle harmonization."
+      },
+      {
+        id: "Foxtrot",
+        name: "Expanded Consciousness",
+        description: "Crystalline grid, geometry of life, sound therapy & free movement, nature bath, perception awakening, natural immunity support."
+      },
+      {
+        id: "Golf",
+        name: "Advanced Development",
+        description: "Sacred language & sound geometry, yoga, rainbow meditation, creative visualization, natural learning & gentle fasting protocols, instinctive nutrition, gentle brain activation."
+      },
+      {
+        id: "Hotel",
+        name: "Vibrational Integration", 
+        description: "Summary of steps (Alpha to Golf), practical tables: nutrition, frequency, care, sacred synthesis and complete integration."
+      }
+    ],
+    evidence: "Hippocrates: 'Let food be thy medicine and medicine be thy food.' Master Omraam Mikhaël Aïvanhov: 'Food is a love letter that the Creator sends us.' Neuroplasticity and fasting: Intermittent fasting in children increases BDNF production promoting spiritual connection.",
+    methodology: "We embody thousands of years of human evolution, bearers of the warrior soul of our ancestors. These human reward systems are deeply engraved in our DNA. Camaraderie, love, family, friendship, struggle, self-transcendence, learning - all these elements are essential."
   },
   ar: {
-    title: "بروتوكول بروليكيد",
-    subtitle: "تحويل النسب لاستقبال وعي جديد",
-    vision: "رؤية شمولية",
-    phases: "هندسة البروتوكول",
-    evidence: "رنين مقيس",
-    immersion: "تجربة حسية",
-    contact: "تفعيل جماعي"
+    title: "بروتوكول BROOLYKID",
+    subtitle: "برنامج متقدم لتطوير الطفل",
+    vision: "هذا البروتوكول يمثل نهجاً ثورياً لتحسين التنمية البشرية. يتطلب الالتزام والصبر والتكيف المستمر، لكن النتائج من حيث اليقظة الواعية والإمكانات المحققة تبرر الاستثمار إلى حد كبير.",
+    phases: [
+      {
+        id: "Alpha",
+        name: "الأساس ما قبل الحمل",
+        description: "إزالة السموم البيولوجية (الكبد، الكلى، الليمف)، التغذية الكمية وأوميغا 3 الذكية، الحماية الطاقية وتنقية الموجات، ممارسات الزوجين، التراث الأبوي، تفعيل الحمض النووي، الغدة الصنوبرية والرؤية الداخلية."
+      },
+      {
+        id: "Beta",
+        name: "الحمل المقدس",
+        description: "الثلث الأول إلى الثالث: الأمان، الوعي، التواصل الدقيق، واجهة التخاطر بين الأم والطفل، الغمر الصوتي، التصور قبل الولادة، التغذية الاهتزازية والنظافة الطاقية."
+      },
+      {
+        id: "Charlie", 
+        name: "الولادة المقدسة",
+        description: "خلق مساحة ترحيب مقدسة، مراسم المرور والبصمة الاهتزازية، الرعاية الأولية: اللبأ، القحفي العجزي، الضوء الأحمر، الحضور، الترسيخ، الاعتراف بالروح."
+      },
+      {
+        id: "Delta",
+        name: "الأساس الكمي",
+        description: "تطوير الميكروبيوم، التدليك المقدس، التحفيز الدهليزي، حمام الصوت، الضوء الناعم والأمان الاهتزازي، المحاذاة بعد الولادة."
+      },
+      {
+        id: "Echo",
+        name: "البرمجة الأساسية", 
+        description: "التطوير الحسي والعصبي العاطفي، التغذية بالرضاعة الاهتزازية، التدليك الطاقي، خطوط الطول، التحفيز القحفي، توازن دورات النهار والليل."
+      },
+      {
+        id: "Foxtrot",
+        name: "الوعي الموسع",
+        description: "الشبكة البلورية، هندسة الحياة، العلاج الصوتي والحركة الحرة، حمام الطبيعة، إيقاظ الإدراك، دعم المناعة الطبيعية."
+      },
+      {
+        id: "Golf",
+        name: "التطوير المتقدم",
+        description: "اللغة المقدسة وهندسة الصوت، اليوجا، التأمل قوس القزح، التصور الإبداعي، التعلم الطبيعي وبروتوكولات الصيام اللطيف، التغذية الغريزية، تفعيل الدماغ اللطيف."
+      },
+      {
+        id: "Hotel",
+        name: "التكامل الاهتزازي",
+        description: "ملخص الخطوات (من ألفا إلى جولف)، الجداول العملية: التغذية، التردد، الرعاية، التركيب المقدس والتكامل الكامل."
+      }
+    ],
+    evidence: "أبقراط: 'ليكن طعامك دواءك ودواؤك طعامك.' المعلم أومرام ميخائيل إيفانهوف: 'الطعام رسالة حب يرسلها لنا الخالق.' المرونة العصبية والصيام: الصيام المتقطع عند الأطفال يزيد إنتاج BDNF مما يعزز الاتصال الروحي.",
+    methodology: "نحن نجسد آلاف السنين من التطور البشري، حاملو الروح المحاربة لأسلافنا. هذه الأنظمة البشرية للمكافأة منقوشة بعمق في حمضنا النووي. الرفقة، الحب، العائلة، الصداقة، النضال، تجاوز الذات، التعلم - كل هذه العناصر أساسية."
   },
   he: {
-    title: "פרוטוקול ברוליקיד",
-    subtitle: "המרת השושלת לקבלת תודעה חדשה",
-    vision: "חזון הוליסטי",
-    phases: "ארכיטקטורת הפרוטוקול",
-    evidence: "תהודה נמדדת",
-    immersion: "חוויה חושית",
-    contact: "הפעלה קולקטיבית"
+    title: "פרוטוקול BROOLYKID",
+    subtitle: "תכנית מתקדמת לפיתוח ילדים",
+    vision: "פרוטוקול זה מייצג גישה מהפכנית לאופטימיזציה של התפתחות אנושית. הוא דורש מחויבות, סבלנות והתאמה מתמדת, אבל התוצאות במונחים של התעוררות מודעת ופוטנציאל ממומש מצדיקות את ההשקעה במידה רבה.",
+    phases: [
+      {
+        id: "Alpha",
+        name: "יסוד טרום-התעברות",
+        description: "ניקוי רעלים ביולוגי (כבד, כליות, לימפה), תזונה קוונטית ואומגה 3 חכמים, הגנה אנרגטית וטיהור גלים אלקטרומגנטיים, תרגולי זוג, מורשת אבות, הפעלת DNA, בלוטת האצטרובל וראייה פנימית."
+      },
+      {
+        id: "Beta",
+        name: "הריון קדוש",
+        description: "טרימסטרים 1-3: ביטחון, מודעות, תקשורת עדינה, ממשק טלפתי אם-ילד, טבילה קולית, ויזואליזציה טרום לידה, תזונה ויברציונית והיגיינה אנרגטית."
+      },
+      {
+        id: "Charlie",
+        name: "לידה קדושה",
+        description: "יצירת מרחב קבלה קדוש, טקס מעבר וחותם ויברציוני, טיפול ראשוני: קולוסטרום, קרניו-סקרל, אור אדום, נוכחות, עיגון, הכרת נשמה."
+      },
+      {
+        id: "Delta",
+        name: "יסוד קוונטי",
+        description: "פיתוח מיקרוביום, עיסוי קדוש, גירוי וסטיבולרי, אמבט קול, אור רך וביטחון ויברציוני, יישור לאחר לידה."
+      },
+      {
+        id: "Echo",
+        name: "תכנות בסיסי",
+        description: "פיתוח חושי ונוירו-רגשי, תזונה בהנקה ויברציונית, עיסוי אנרגטי, מרידיאנים, גירוי גולגולתי, הרמוניזציה של מחזורי יום/לילה."
+      },
+      {
+        id: "Foxtrot",
+        name: "מודעות מורחבת",
+        description: "רשת קריסטלית, גיאומטריה של החיים, תרפיה קולית ותנועה חופשית, אמבט טבע, התעוררות תפיסה, תמיכה בחסינות טבעית."
+      },
+      {
+        id: "Golf",
+        name: "פיתוח מתקדם",
+        description: "שפה קדושה וגיאומטריה קולית, יוגה, מדיטציית קשת, ויזואליזציה יצירתית, למידה טבעית ופרוטוקולי צום עדינים, תזונה אינסטינקטיבית, הפעלת מוח עדינה."
+      },
+      {
+        id: "Hotel",
+        name: "אינטגרציה ויברציונית",
+        description: "סיכום שלבים (אלפא עד גולף), טבלאות מעשיות: תזונה, תדירות, טיפול, סינתזה קדושה ואינטגרציה מלאה."
+      }
+    ],
+    evidence: "היפוקרטס: 'יהי מזונך תרופתך ותרופתך מזונך.' המורה אומראם מיכאל איבנהוף: 'המזון הוא מכתב אהבה שהבורא שולח לנו.' נוירופלסטיות וצום: צום לסירוגין בילדים מגביר ייצור BDNF המקדם חיבור רוחני.",
+    methodology: "אנו מגלמים אלפי שנים של התפתחות אנושית, נושאי נשמת הלוחם של אבותינו. מערכות התגמול האנושיות הללו חרוטות עמוק ב-DNA שלנו. רעות, אהבה, משפחה, ידידות, מאבק, התעלות עצמית, למידה - כל האלמנטים הללו חיוניים."
   },
   es: {
     title: "Protocolo BROOLYKID",
-    subtitle: "Transmutar el linaje para acoger una nueva conciencia",
-    vision: "Visión holística",
-    phases: "Arquitectura del protocolo",
-    evidence: "Resonancia medida",
-    immersion: "Experiencia sensorial",
-    contact: "Activación colectiva"
+    subtitle: "Programa Avanzado de Desarrollo Infantil",
+    vision: "Este protocolo representa un enfoque revolucionario para la optimización del desarrollo humano. Requiere compromiso, paciencia y adaptación constante, pero los resultados en términos de despertar consciente y potencial actualizado justifican ampliamente la inversión.",
+    phases: [
+      {
+        id: "Alpha",
+        name: "Fundación Preconcepcional",
+        description: "Desintoxicación biológica (hígado, riñones, linfa), nutrición cuántica y Omega-3 inteligentes, protección energética y purificación de ondas EMF, prácticas de pareja, herencia ancestral, activación del ADN, glándula pineal y visión interior."
+      },
+      {
+        id: "Beta",
+        name: "Embarazo Sagrado",
+        description: "Trimestres 1-3: seguridad, conciencia, comunicación sutil, interfaz telepática madre-hijo, inmersión sonora, visualización prenatal, nutrición vibratoria e higiene energética."
+      },
+      {
+        id: "Charlie",
+        name: "Nacimiento Sagrado",
+        description: "Creación de un espacio de bienvenida sagrado, ceremonia de paso e impronta vibratoria, cuidados iniciales: calostro, craneosacral, luz roja, presencia, anclaje, reconocimiento del alma."
+      },
+      {
+        id: "Delta",
+        name: "Fundación Cuántica",
+        description: "Desarrollo del microbioma, masaje sagrado, estimulación vestibular, baño sonoro, luz suave y seguridad vibratoria, alineación post-natal."
+      },
+      {
+        id: "Echo",
+        name: "Programación Fundamental",
+        description: "Desarrollo sensorial y neuro-emocional, nutrición por lactancia vibratoria, masaje energético, meridianos, estimulación craneal, armonización de ciclos día/noche."
+      },
+      {
+        id: "Foxtrot",
+        name: "Conciencia Expandida",
+        description: "Rejilla cristalina, geometría de la vida, terapia sonora y movimiento libre, baño de naturaleza, despertar de percepciones, apoyo a la inmunidad natural."
+      },
+      {
+        id: "Golf",
+        name: "Desarrollo Avanzado",
+        description: "Lenguaje sagrado y geometría sonora, yoga, meditación arcoíris, visualización creativa, aprendizaje natural y protocolos de ayuno suave, nutrición instintiva, activación cerebral suave."
+      },
+      {
+        id: "Hotel",
+        name: "Integración Vibratoria",
+        description: "Resumen de pasos (Alpha a Golf), tablas prácticas: nutrición, frecuencia, cuidados, síntesis sagrada e integración completa."
+      }
+    ],
+    evidence: "Hipócrates: 'Que tu alimento sea tu medicina y tu medicina sea tu alimento.' Maestro Omraam Mikhaël Aïvanhov: 'La comida es una carta de amor que nos envía el Creador.' Neuroplasticidad y ayuno: El ayuno intermitente en niños aumenta la producción de BDNF promoviendo la conexión espiritual.",
+    methodology: "Encarnamos miles de años de evolución humana, portadores del alma guerrera de nuestros ancestros. Estos sistemas de recompensa humanos están profundamente grabados en nuestro ADN. Camaradería, amor, familia, amistad, lucha, superación personal, aprendizaje - todos estos elementos son esenciales."
   },
   fa: {
-    title: "پروتکل برولیکید",
-    subtitle: "تبدیل نسب برای استقبال از آگاهی جدید",
-    vision: "چشم‌انداز کل‌نگر",
-    phases: "معماری پروتکل",
-    evidence: "رزونانس اندازه‌گیری شده",
-    immersion: "تجربه حسی",
-    contact: "فعال‌سازی جمعی"
+    title: "پروتکل BROOLYKID",
+    subtitle: "برنامه پیشرفته رشد کودک",
+    vision: "این پروتکل نمایانگر رویکردی انقلابی برای بهینه‌سازی رشد انسانی است. نیاز به تعهد، صبر و سازگاری مداوم دارد، اما نتایج از نظر بیداری آگاهانه و پتانسیل محقق شده، سرمایه‌گذاری را به طور گسترده توجیه می‌کند.",
+    phases: [
+      {
+        id: "Alpha",
+        name: "بنیان پیش از بارداری",
+        description: "سم‌زدایی بیولوژیک (کبد، کلیه، لنف)، تغذیه کوانتومی و امگا 3 هوشمند، محافظت انرژی و تصفیه امواج EMF، تمرینات زوجین، میراث اجدادی، فعال‌سازی DNA، غده صنوبری و بینش درونی."
+      },
+      {
+        id: "Beta",
+        name: "بارداری مقدس",
+        description: "سه ماهه 1-3: امنیت، آگاهی، ارتباط ظریف، رابط تله‌پاتیک مادر-کودک، غوطه‌وری صوتی، تجسم قبل از تولد، تغذیه ارتعاشی و بهداشت انرژی."
+      },
+      {
+        id: "Charlie",
+        name: "تولد مقدس",
+        description: "ایجاد فضای استقبال مقدس، مراسم گذر و اثر ارتعاشی، مراقبت اولیه: آغوز، جمجمه‌ای-خاجی، نور قرمز، حضور، لنگر انداختن، شناخت روح."
+      },
+      {
+        id: "Delta",
+        name: "بنیان کوانتومی",
+        description: "توسعه میکروبیوم، ماساژ مقدس، تحریک دهلیزی، حمام صوتی، نور نرم و امنیت ارتعاشی، تراز پس از تولد."
+      },
+      {
+        id: "Echo",
+        name: "برنامه‌ریزی بنیادی",
+        description: "توسعه حسی و عصبی-عاطفی، تغذیه با شیردهی ارتعاشی، ماساژ انرژی، نصف‌النهارها، تحریک جمجمه‌ای، هماهنگی چرخه‌های روز/شب."
+      },
+      {
+        id: "Foxtrot",
+        name: "آگاهی گسترش یافته",
+        description: "شبکه کریستالی، هندسه زندگی، درمان صوتی و حرکت آزاد، حمام طبیعت، بیداری ادراک، پشتیبانی ایمنی طبیعی."
+      },
+      {
+        id: "Golf",
+        name: "توسعه پیشرفته",
+        description: "زبان مقدس و هندسه صوتی، یوگا، مدیتیشن رنگین‌کمان، تجسم خلاق، یادگیری طبیعی و پروتکل‌های روزه ملایم، تغذیه غریزی، فعال‌سازی ملایم مغز."
+      },
+      {
+        id: "Hotel",
+        name: "یکپارچگی ارتعاشی",
+        description: "خلاصه مراحل (آلفا تا گلف)، جداول عملی: تغذیه، فرکانس، مراقبت، سنتز مقدس و یکپارچگی کامل."
+      }
+    ],
+    evidence: "بقراط: 'بگذار غذای تو داروی تو باشد و داروی تو غذای تو.' استاد اومرام میخائیل آیوانهوف: 'غذا نامه عشقی است که خالق برای ما می‌فرستد.' نوروپلاستیسیتی و روزه: روزه متناوب در کودکان تولید BDNF را افزایش می‌دهد که ارتباط معنوی را تقویت می‌کند.",
+    methodology: "ما هزاران سال تکامل انسانی را تجسم می‌کنیم، حاملان روح جنگجوی اجدادمان. این سیستم‌های پاداش انسانی عمیقاً در DNA ما حک شده‌اند. رفاقت، عشق، خانواده، دوستی، مبارزه، تعالی خود، یادگیری - همه این عناصر ضروری هستند."
   }
 };
 
@@ -1167,81 +1407,82 @@ async function generatePDF(language, includeImages, includePhases) {
     const { jsPDF } = window.jsPDF;
     const doc = new jsPDF();
 
-  // Set up fonts for different languages
-  setupFontsForLanguage(doc, language);
+    // Set up fonts for different languages
+    setupFontsForLanguage(doc, language);
 
-  const translation = translations[language] || translations.fr;
+    const translation = translations[language] || translations.fr;
 
-  // Add title
-  doc.setFontSize(24);
-  doc.setFont("helvetica", "bold");
-  doc.text(translation.title, 20, 30);
+    // Add title
+    doc.setFontSize(24);
+    doc.setFont("helvetica", "bold");
+    doc.text(translation.title, 20, 30);
 
-  // Add subtitle
-  doc.setFontSize(14);
-  doc.setFont("helvetica", "normal");
-  const subtitleLines = doc.splitTextToSize(translation.subtitle, 170);
-  doc.text(subtitleLines, 20, 50);
+    // Add subtitle
+    doc.setFontSize(14);
+    doc.setFont("helvetica", "normal");
+    const subtitleLines = doc.splitTextToSize(translation.subtitle, 170);
+    doc.text(subtitleLines, 20, 50);
 
-  let yPosition = 80;
+    let yPosition = 80;
 
-  // Add vision section
-  doc.setFontSize(18);
-  doc.setFont("helvetica", "bold");
-  doc.text(translation.vision, 20, yPosition);
-  yPosition += 15;
-
-  doc.setFontSize(12);
-  doc.setFont("helvetica", "normal");
-  const visionText = getVisionText(language);
-  const visionLines = doc.splitTextToSize(visionText, 170);
-  doc.text(visionLines, 20, yPosition);
-  yPosition += visionLines.length * 6 + 20;
-
-  // Add phases if requested
-  if (includePhases) {
+    // Add vision section
     doc.setFontSize(18);
     doc.setFont("helvetica", "bold");
-    doc.text(translation.phases, 20, yPosition);
+    doc.text(translation.vision, 20, yPosition);
     yPosition += 15;
 
     doc.setFontSize(12);
     doc.setFont("helvetica", "normal");
+    const visionText = getVisionText(language);
+    const visionLines = doc.splitTextToSize(visionText, 170);
+    doc.text(visionLines, 20, yPosition);
+    yPosition += visionLines.length * 6 + 20;
 
-    phases.forEach((phase, index) => {
-      if (yPosition > 250) {
-        doc.addPage();
-        yPosition = 30;
-      }
-
+    // Add phases if requested
+    if (includePhases) {
+      doc.setFontSize(18);
       doc.setFont("helvetica", "bold");
-      doc.text(`${phase.label}: ${phase.title}`, 20, yPosition);
-      yPosition += 8;
+      doc.text(translation.phases, 20, yPosition);
+      yPosition += 15;
 
+      doc.setFontSize(12);
       doc.setFont("helvetica", "normal");
-      const phaseText = `${phase.timeline} - ${phase.description}`;
-      const phaseLines = doc.splitTextToSize(phaseText, 170);
-      doc.text(phaseLines, 20, yPosition);
-      yPosition += phaseLines.length * 6 + 10;
-    });
-  }
 
-  // Add evidence section
-  doc.setFontSize(18);
-  doc.setFont("helvetica", "bold");
-  doc.text(translation.evidence, 20, yPosition);
-  yPosition += 15;
+      const phasesData = translation.phases || [];
+      phasesData.forEach((phase, index) => {
+        if (yPosition > 250) {
+          doc.addPage();
+          yPosition = 30;
+        }
 
-  doc.setFontSize(12);
-  doc.setFont("helvetica", "normal");
-  const evidenceText = getEvidenceText(language);
-  const evidenceLines = doc.splitTextToSize(evidenceText, 170);
-  doc.text(evidenceLines, 20, yPosition);
+        doc.setFont("helvetica", "bold");
+        doc.text(`${phase.id}: ${phase.name}`, 20, yPosition);
+        yPosition += 8;
+
+        doc.setFont("helvetica", "normal");
+        const phaseText = phase.description;
+        const phaseLines = doc.splitTextToSize(phaseText, 170);
+        doc.text(phaseLines, 20, yPosition);
+        yPosition += phaseLines.length * 6 + 10;
+      });
+    }
+
+    // Add evidence section
+    doc.setFontSize(18);
+    doc.setFont("helvetica", "bold");
+    doc.text(translation.evidence, 20, yPosition);
+    yPosition += 15;
+
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "normal");
+    const evidenceText = getEvidenceText(language);
+    const evidenceLines = doc.splitTextToSize(evidenceText, 170);
+    doc.text(evidenceLines, 20, yPosition);
 
     // Save the PDF
     const fileName = `BROOLYKID_Protocol_${language.toUpperCase()}.pdf`;
     doc.save(fileName);
-    
+
   } catch (error) {
     console.error("PDF generation error:", error);
     // Fallback: create a simple text-based PDF
@@ -1260,8 +1501,8 @@ ${translation.subtitle}
 ${translation.vision}
 ${getVisionText(language)}
 
-${translation.phases}
-${phases.map(phase => `${phase.label}: ${phase.title}\n${phase.description}`).join('\n\n')}
+Phases du Protocole
+${getPhasesText(language)}
 
 ${translation.evidence}
 ${getEvidenceText(language)}
@@ -1269,7 +1510,7 @@ ${getEvidenceText(language)}
 ---
 Généré le ${new Date().toLocaleDateString()}
   `;
-  
+
   // Create a simple text file download
   const blob = new Blob([content], { type: 'text/plain' });
   const url = window.URL.createObjectURL(blob);
@@ -1300,27 +1541,23 @@ function setupFontsForLanguage(doc, language) {
 }
 
 function getVisionText(language) {
-  const texts = {
-    fr: "BROOLYKID accompagne les familles à travers un voyage complet : purification des terrains, activation des capacités sensorielles, et création d'un environnement vibratoire cohérent pour permettre à l'enfant de se déployer avec conscience.",
-    en: "BROOLYKID accompanies families through a complete journey: terrain purification, sensory capacity activation, and creation of a coherent vibratory environment to allow the child to unfold with consciousness.",
-    ar: "يرافق بروليكيد العائلات عبر رحلة شاملة: تنقية التربة، وتفعيل القدرات الحسية، وخلق بيئة اهتزازية متماسكة للسماح للطفل بالتطور بوعي.",
-    he: "ברוליקיד מלווה משפחות במסע מלא: טיהור השטח, הפעלת יכולות חושיות, ויצירת סביבה ויברציונית קוהרנטית לאפשר לילד להתפתח במודעות.",
-    es: "BROOLYKID acompaña a las familias a través de un viaje completo: purificación del terreno, activación de capacidades sensoriales, y creación de un entorno vibratorio coherente para permitir que el niño se despliegue con conciencia.",
-    fa: "برولیکید خانواده‌ها را در یک سفر کامل همراهی می‌کند: پاکسازی زمین، فعال‌سازی ظرفیت‌های حسی، و ایجاد محیط ارتعاشی منسجم برای اجازه دادن به کودک برای گسترش با آگاهی."
-  };
-  return texts[language] || texts.fr;
+  const translation = translations[language] || translations.fr;
+  return translation.vision || "Ce protocole représente une approche révolutionnaire pour l'optimisation du développement humain.";
 }
 
 function getEvidenceText(language) {
-  const texts = {
-    fr: "Les études internationales confirment l'impact des pratiques vibratoires et spirituelles sur le développement intégral de l'enfant. Les données montrent une réduction de 40% des troubles comportementaux et une augmentation de 60% de la résilience émotionnelle.",
-    en: "International studies confirm the impact of vibratory and spiritual practices on the integral development of the child. Data shows a 40% reduction in behavioral disorders and a 60% increase in emotional resilience.",
-    ar: "تؤكد الدراسات الدولية تأثير الممارسات الاهتزازية والروحية على التطور المتكامل للطفل. تظهر البيانات انخفاضًا بنسبة 40% في الاضطرابات السلوكية وزيادة بنسبة 60% في المرونة العاطفية.",
-    he: "מחקרים בינלאומיים מאשרים את ההשפעה של פרקטיקות ויברציוניות ורוחניות על ההתפתחות האינטגרלית של הילד. הנתונים מראים ירידה של 40% בהפרעות התנהגותיות ועלייה של 60% בחוסן הרגשי.",
-    es: "Los estudios internacionales confirman el impacto de las prácticas vibratorias y espirituales en el desarrollo integral del niño. Los datos muestran una reducción del 40% en los trastornos conductuales y un aumento del 60% en la resiliencia emocional.",
-    fa: "مطالعات بین‌المللی تأثیر تمرینات ارتعاشی و معنوی بر رشد یکپارچه کودک را تأیید می‌کند. داده‌ها کاهش 40% در اختلالات رفتاری و افزایش 60% در تاب‌آوری عاطفی را نشان می‌دهد."
-  };
-  return texts[language] || texts.fr;
+  const translation = translations[language] || translations.fr;
+  return translation.evidence || "Hippocrate : 'Que ton aliment soit ta seule médecine et que ta médecine soit ton aliment.'";
+}
+
+function getPhasesText(language) {
+  const translation = translations[language] || translations.fr;
+  if (translation.phases && Array.isArray(translation.phases)) {
+    return translation.phases.map(phase => 
+      `${phase.name}: ${phase.description}`
+    ).join('\n\n');
+  }
+  return "Phases de développement et étapes d'implémentation";
 }
 
 // Utility function to load scripts dynamically
