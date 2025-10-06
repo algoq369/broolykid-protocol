@@ -16,6 +16,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     />
   </head>
+
   <body>
     <div id="loading-screen">
       <div class="loading-content">
@@ -38,6 +39,7 @@
           <li><a class="nav-link" href="#phases">Phases</a></li>
           <li><a class="nav-link" href="#evidence">Données</a></li>
           <li><a class="nav-link" href="#immersion">Expérience</a></li>
+          <li><a class="nav-link" href="#pdf-generator">PDF</a></li>
           <li><a class="nav-link" href="#contact">Contact</a></li>
         </ul>
         <div class="hamburger">
@@ -278,6 +280,49 @@
         </div>
       </section>
 
+      <section id="pdf-generator" class="section pdf-generator">
+        <div class="container">
+          <div class="section-header">
+            <span class="eyebrow">Téléchargement</span>
+            <h2>Générez votre protocole en PDF</h2>
+            <p>
+              Téléchargez le protocole BROOLYKID complet dans votre langue
+              préférée pour une consultation hors ligne.
+            </p>
+          </div>
+          <div class="pdf-generator-content">
+            <div class="language-selector">
+              <label for="language-select">Choisissez votre langue :</label>
+              <select id="language-select" class="language-dropdown">
+                <option value="fr">Français</option>
+                <option value="en">English</option>
+                <option value="ar">العربية (Arabic)</option>
+                <option value="he">עברית (Hebrew)</option>
+                <option value="es">Español</option>
+                <option value="fa">فارسی (Farsi)</option>
+              </select>
+            </div>
+            <div class="pdf-options">
+              <label class="checkbox-label">
+                <input type="checkbox" id="include-images" checked />
+                <span class="checkmark"></span>
+                Inclure les images et graphiques
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" id="include-phases" checked />
+                <span class="checkmark"></span>
+                Inclure toutes les phases détaillées
+              </label>
+            </div>
+            <button id="generate-pdf" class="btn btn-primary pdf-btn">
+              <i class="fas fa-download"></i>
+              Générer le PDF
+            </button>
+            <div id="pdf-status" class="pdf-status"></div>
+          </div>
+        </div>
+      </section>
+
       <section id="contact" class="section contact">
         <div class="container">
           <div class="contact-inner">
@@ -318,6 +363,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r152/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="script.js"></script>
   </body>
 </html>

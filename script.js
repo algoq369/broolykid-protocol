@@ -504,6 +504,55 @@ function initThreeScene() {
     scene.add(orb);
   }
 
+  // Add interactive particles that respond to mouse movement
+  const particleGeometry = new THREE.BufferGeometry();
+  const particleCount = isMobile ? 200 : 500;
+  const particlePositions = new Float32Array(particleCount * 3);
+  const particleColors = new Float32Array(particleCount * 3);
+
+  for (let i = 0; i < particleCount; i += 1) {
+    const i3 = i * 3;
+    particlePositions[i3] = (Math.random() - 0.5) * 50;
+    particlePositions[i3 + 1] = (Math.random() - 0.5) * 40;
+    particlePositions[i3 + 2] = (Math.random() - 0.5) * 50;
+
+    // Random rainbow colors
+    const colorIndex = Math.floor(Math.random() * 6);
+    const rainbowColors = [
+      [1.0, 0.41, 0.38], // Red
+      [1.0, 0.65, 0.17], // Orange
+      [1.0, 0.86, 0.35], // Yellow
+      [0.38, 0.87, 0.72], // Green
+      [0.41, 0.62, 1.0], // Blue
+      [0.78, 0.4, 1.0], // Purple
+    ];
+    const [r, g, b] = rainbowColors[colorIndex];
+    particleColors[i3] = r;
+    particleColors[i3 + 1] = g;
+    particleColors[i3 + 2] = b;
+  }
+
+  particleGeometry.setAttribute(
+    "position",
+    new THREE.BufferAttribute(particlePositions, 3),
+  );
+  particleGeometry.setAttribute(
+    "color",
+    new THREE.BufferAttribute(particleColors, 3),
+  );
+
+  const particleMaterial = new THREE.PointsMaterial({
+    size: 0.02,
+    transparent: true,
+    opacity: 0.6,
+    vertexColors: true,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
+  });
+
+  const particles = new THREE.Points(particleGeometry, particleMaterial);
+  scene.add(particles);
+
   const pointer = new THREE.Vector2();
   const targetRotation = { x: 0, y: 0 };
 
@@ -564,6 +613,17 @@ function initThreeScene() {
     const twinkle = Math.sin(elapsed * 2) * 0.1 + 0.8;
     starMaterial.opacity = twinkle;
 
+    // Animate interactive particles
+    particles.rotation.y += 0.0002;
+    particles.rotation.x += 0.0001;
+
+    // Make particles respond to mouse movement
+    const mouseInfluence = 0.1;
+    particles.rotation.y +=
+      (targetRotation.y * mouseInfluence - particles.rotation.y) * 0.01;
+    particles.rotation.x +=
+      (targetRotation.x * mouseInfluence - particles.rotation.x) * 0.01;
+
     // Update noise shader
     noiseUniforms.uTime.value = elapsed;
 
@@ -594,27 +654,50 @@ function setupScrollMotion({
     return;
   gsap.registerPlugin(ScrollTrigger);
 
-  // Create a more sophisticated scroll timeline like igloo.inc
+  // Create dramatic igloo.inc-style scroll timeline
   const master = gsap.timeline({ defaults: { ease: "none" } });
 
-  // Hero section - initial camera movement
+  // Hero section - dramatic camera zoom and rotation
   master.to(camera.position, {
-    z: 7.2,
-    y: 0.4,
-    x: 0.3,
+    z: 4.5,
+    y: 1.2,
+    x: 0.8,
     scrollTrigger: {
       trigger: "#hero",
       start: "top top",
+      end: "bottom top",
+      scrub: 0.8,
+    },
+  });
+
+  master.to(camera.rotation, {
+    x: -0.15,
+    y: 0.1,
+    scrollTrigger: {
+      trigger: "#hero",
+      start: "top top",
+      end: "bottom top",
+      scrub: 1.0,
+    },
+  });
+
+  // Vision section - massive transformation
+  master.to(coreGroup.rotation, {
+    y: () => coreGroup.rotation.y + Math.PI * 2.5,
+    x: () => coreGroup.rotation.x - Math.PI * 0.4,
+    z: () => coreGroup.rotation.z + Math.PI * 0.8,
+    scrollTrigger: {
+      trigger: "#vision",
+      start: "top bottom",
       end: "bottom top",
       scrub: 1.2,
     },
   });
 
-  // Vision section - dramatic rotation and color shift
-  master.to(coreGroup.rotation, {
-    y: () => coreGroup.rotation.y + Math.PI * 1.2,
-    x: () => coreGroup.rotation.x - Math.PI * 0.18,
-    z: () => coreGroup.rotation.z + Math.PI * 0.3,
+  master.to(coreGroup.scale, {
+    x: 1.3,
+    y: 1.3,
+    z: 1.3,
     scrollTrigger: {
       trigger: "#vision",
       start: "top bottom",
@@ -623,18 +706,33 @@ function setupScrollMotion({
     },
   });
 
-  // Phases section - camera dive and ribbon transformation
+  // Phases section - camera dive and dramatic color shift
   master.to(
     camera.position,
     {
-      z: 5.8,
-      y: -0.2,
-      x: 0.8,
+      z: 3.2,
+      y: -0.8,
+      x: 1.5,
       scrollTrigger: {
         trigger: "#phases",
         start: "top 80%",
         end: "bottom top",
-        scrub: 1.8,
+        scrub: 1.0,
+      },
+    },
+    0,
+  );
+
+  master.to(
+    camera.rotation,
+    {
+      x: 0.2,
+      y: -0.3,
+      scrollTrigger: {
+        trigger: "#phases",
+        start: "top 80%",
+        end: "bottom top",
+        scrub: 1.2,
       },
     },
     0,
@@ -643,30 +741,31 @@ function setupScrollMotion({
   master.to(
     ribbon.material,
     {
-      opacity: 0.95,
-      emissiveIntensity: 0.9,
+      opacity: 1.0,
+      emissiveIntensity: 1.2,
       color: 0xff6b61,
       scrollTrigger: {
         trigger: "#phases",
         start: "top center",
         end: "bottom top",
-        scrub: 1.2,
+        scrub: 0.8,
       },
     },
     0,
   );
 
-  // Evidence section - floating elements dance
+  // Evidence section - explosive transformation
   master.to(
     floatingGroup.position,
     {
-      y: 0.8,
-      x: 0.4,
+      y: 1.5,
+      x: 0.8,
+      z: 0.5,
       scrollTrigger: {
         trigger: "#evidence",
         start: "top 85%",
         end: "bottom top",
-        scrub: 1.4,
+        scrub: 0.9,
       },
     },
     0,
@@ -675,29 +774,46 @@ function setupScrollMotion({
   master.to(
     floatingGroup.rotation,
     {
-      y: Math.PI * 0.4,
-      x: Math.PI * 0.1,
+      y: Math.PI * 0.8,
+      x: Math.PI * 0.3,
+      z: Math.PI * 0.2,
       scrollTrigger: {
         trigger: "#evidence",
         start: "top 85%",
         end: "bottom top",
-        scrub: 1.6,
+        scrub: 1.1,
       },
     },
     0,
   );
 
-  // Immersion section - halo expansion and color shift
+  master.to(
+    floatingGroup.scale,
+    {
+      x: 1.4,
+      y: 1.4,
+      z: 1.4,
+      scrollTrigger: {
+        trigger: "#evidence",
+        start: "top 85%",
+        end: "bottom top",
+        scrub: 1.3,
+      },
+    },
+    0,
+  );
+
+  // Immersion section - massive halo expansion
   master.to(
     halo.scale,
     {
-      x: 1.6,
-      y: 1.6,
+      x: 2.2,
+      y: 2.2,
       scrollTrigger: {
         trigger: "#immersion",
         start: "top bottom",
         end: "top 20%",
-        scrub: 1.3,
+        scrub: 0.7,
       },
     },
     0,
@@ -707,77 +823,331 @@ function setupScrollMotion({
     halo.material,
     {
       color: 0x61ddb7,
-      opacity: 0.4,
+      opacity: 0.6,
       scrollTrigger: {
         trigger: "#immersion",
         start: "top bottom",
         end: "top 20%",
-        scrub: 1.1,
+        scrub: 0.9,
       },
     },
     0,
   );
 
-  // Noise plane intensity and color evolution
+  // Noise plane dramatic intensity increase
   master.to(
     noisePlane.material.uniforms.uIntensity,
     {
-      value: 0.25,
+      value: 0.4,
       scrollTrigger: {
         trigger: "#immersion",
         start: "top 80%",
         end: "bottom top",
-        scrub: 1.5,
+        scrub: 1.0,
       },
     },
     0,
   );
 
-  // Contact section - final camera pull back
+  // Contact section - final dramatic pull back
   master.to(
     camera.position,
     {
-      z: 8.5,
-      y: 0.1,
+      z: 12.0,
+      y: 0.5,
       x: 0,
       scrollTrigger: {
         trigger: "#contact",
         start: "top 90%",
         end: "bottom top",
-        scrub: 1.2,
+        scrub: 0.8,
       },
     },
     0,
   );
 
-  // Add parallax effect to floating elements
+  master.to(
+    camera.rotation,
+    {
+      x: 0,
+      y: 0,
+      scrollTrigger: {
+        trigger: "#contact",
+        start: "top 90%",
+        end: "bottom top",
+        scrub: 1.0,
+      },
+    },
+    0,
+  );
+
+  // Enhanced parallax effects for floating elements
   floatingGroup.children.forEach((mesh, index) => {
     gsap.to(mesh.position, {
-      y: `+=${0.5 + index * 0.1}`,
+      y: `+=${1.0 + index * 0.2}`,
+      x: `+=${0.3 + index * 0.1}`,
       scrollTrigger: {
         trigger: "body",
         start: "top top",
         end: "bottom bottom",
-        scrub: 2 + index * 0.2,
+        scrub: 1.5 + index * 0.3,
       },
     });
   });
 
-  // Add color transitions to floating elements
+  // Dynamic color transitions for floating elements
   floatingGroup.children.forEach((mesh, index) => {
     const colors = [0xff6b61, 0xffa62b, 0xffdb5a, 0x61ddb7, 0x689dff, 0xc867ff];
     gsap.to(mesh.material, {
       color: colors[index % colors.length],
+      emissiveIntensity: 0.8,
       scrollTrigger: {
         trigger: "#phases",
         start: "top center",
         end: "bottom top",
-        scrub: 1.5,
+        scrub: 1.2,
+      },
+    });
+  });
+
+  // Add dramatic scale animations to individual elements
+  floatingGroup.children.forEach((mesh, index) => {
+    gsap.to(mesh.scale, {
+      x: 1.5,
+      y: 1.5,
+      z: 1.5,
+      scrollTrigger: {
+        trigger: "#evidence",
+        start: "top 80%",
+        end: "bottom top",
+        scrub: 1.0 + index * 0.1,
       },
     });
   });
 
   ScrollTrigger.refresh();
+}
+
+// Multi-language content for PDF generation
+const translations = {
+  fr: {
+    title: "Protocole BROOLYKID",
+    subtitle: "Transmuter la lignée pour accueillir une conscience nouvelle",
+    vision: "Vision holistique",
+    phases: "Architecture du protocole",
+    evidence: "Résonnance mesurée",
+    immersion: "Expérience sensorielle",
+    contact: "Activation collective",
+  },
+  en: {
+    title: "BROOLYKID Protocol",
+    subtitle: "Transmute the lineage to welcome a new consciousness",
+    vision: "Holistic Vision",
+    phases: "Protocol Architecture",
+    evidence: "Measured Resonance",
+    immersion: "Sensory Experience",
+    contact: "Collective Activation",
+  },
+  ar: {
+    title: "بروتوكول بروليكيد",
+    subtitle: "تحويل النسب لاستقبال وعي جديد",
+    vision: "رؤية شمولية",
+    phases: "هندسة البروتوكول",
+    evidence: "رنين مقيس",
+    immersion: "تجربة حسية",
+    contact: "تفعيل جماعي",
+  },
+  he: {
+    title: "פרוטוקול ברוליקיד",
+    subtitle: "המרת השושלת לקבלת תודעה חדשה",
+    vision: "חזון הוליסטי",
+    phases: "ארכיטקטורת הפרוטוקול",
+    evidence: "תהודה נמדדת",
+    immersion: "חוויה חושית",
+    contact: "הפעלה קולקטיבית",
+  },
+  es: {
+    title: "Protocolo BROOLYKID",
+    subtitle: "Transmutar el linaje para acoger una nueva conciencia",
+    vision: "Visión holística",
+    phases: "Arquitectura del protocolo",
+    evidence: "Resonancia medida",
+    immersion: "Experiencia sensorial",
+    contact: "Activación colectiva",
+  },
+  fa: {
+    title: "پروتکل برولیکید",
+    subtitle: "تبدیل نسب برای استقبال از آگاهی جدید",
+    vision: "چشم‌انداز کل‌نگر",
+    phases: "معماری پروتکل",
+    evidence: "رزونانس اندازه‌گیری شده",
+    immersion: "تجربه حسی",
+    contact: "فعال‌سازی جمعی",
+  },
+};
+
+// PDF Generation functionality
+function initPDFGenerator() {
+  const generateBtn = document.getElementById("generate-pdf");
+  const languageSelect = document.getElementById("language-select");
+  const statusDiv = document.getElementById("pdf-status");
+
+  if (!generateBtn || !languageSelect || !statusDiv) return;
+
+  generateBtn.addEventListener("click", async () => {
+    const selectedLanguage = languageSelect.value;
+    const includeImages = document.getElementById("include-images").checked;
+    const includePhases = document.getElementById("include-phases").checked;
+
+    try {
+      statusDiv.className = "pdf-status loading";
+      statusDiv.textContent = "Génération du PDF en cours...";
+
+      await generatePDF(selectedLanguage, includeImages, includePhases);
+
+      statusDiv.className = "pdf-status success";
+      statusDiv.textContent = "PDF généré avec succès !";
+
+      setTimeout(() => {
+        statusDiv.textContent = "";
+        statusDiv.className = "pdf-status";
+      }, 3000);
+    } catch (error) {
+      console.error("PDF generation error:", error);
+      statusDiv.className = "pdf-status error";
+      statusDiv.textContent = "Erreur lors de la génération du PDF";
+
+      setTimeout(() => {
+        statusDiv.textContent = "";
+        statusDiv.className = "pdf-status";
+      }, 3000);
+    }
+  });
+}
+
+async function generatePDF(language, includeImages, includePhases) {
+  if (typeof window.jsPDF === "undefined") {
+    throw new Error("jsPDF library not loaded");
+  }
+
+  const { jsPDF } = window.jsPDF;
+  const doc = new jsPDF();
+
+  // Set up fonts for different languages
+  setupFontsForLanguage(doc, language);
+
+  const translation = translations[language] || translations.fr;
+
+  // Add title
+  doc.setFontSize(24);
+  doc.setFont("helvetica", "bold");
+  doc.text(translation.title, 20, 30);
+
+  // Add subtitle
+  doc.setFontSize(14);
+  doc.setFont("helvetica", "normal");
+  const subtitleLines = doc.splitTextToSize(translation.subtitle, 170);
+  doc.text(subtitleLines, 20, 50);
+
+  let yPosition = 80;
+
+  // Add vision section
+  doc.setFontSize(18);
+  doc.setFont("helvetica", "bold");
+  doc.text(translation.vision, 20, yPosition);
+  yPosition += 15;
+
+  doc.setFontSize(12);
+  doc.setFont("helvetica", "normal");
+  const visionText = getVisionText(language);
+  const visionLines = doc.splitTextToSize(visionText, 170);
+  doc.text(visionLines, 20, yPosition);
+  yPosition += visionLines.length * 6 + 20;
+
+  // Add phases if requested
+  if (includePhases) {
+    doc.setFontSize(18);
+    doc.setFont("helvetica", "bold");
+    doc.text(translation.phases, 20, yPosition);
+    yPosition += 15;
+
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "normal");
+
+    phases.forEach((phase, index) => {
+      if (yPosition > 250) {
+        doc.addPage();
+        yPosition = 30;
+      }
+
+      doc.setFont("helvetica", "bold");
+      doc.text(`${phase.label}: ${phase.title}`, 20, yPosition);
+      yPosition += 8;
+
+      doc.setFont("helvetica", "normal");
+      const phaseText = `${phase.timeline} - ${phase.description}`;
+      const phaseLines = doc.splitTextToSize(phaseText, 170);
+      doc.text(phaseLines, 20, yPosition);
+      yPosition += phaseLines.length * 6 + 10;
+    });
+  }
+
+  // Add evidence section
+  doc.setFontSize(18);
+  doc.setFont("helvetica", "bold");
+  doc.text(translation.evidence, 20, yPosition);
+  yPosition += 15;
+
+  doc.setFontSize(12);
+  doc.setFont("helvetica", "normal");
+  const evidenceText = getEvidenceText(language);
+  const evidenceLines = doc.splitTextToSize(evidenceText, 170);
+  doc.text(evidenceLines, 20, yPosition);
+
+  // Save the PDF
+  const fileName = `BROOLYKID_Protocol_${language.toUpperCase()}.pdf`;
+  doc.save(fileName);
+}
+
+function setupFontsForLanguage(doc, language) {
+  // For RTL languages, we would need special handling
+  // For now, we'll use standard fonts that support most characters
+  switch (language) {
+    case "ar":
+    case "fa":
+      // Arabic and Farsi are RTL languages - would need special handling
+      break;
+    case "he":
+      // Hebrew is RTL - would need special handling
+      break;
+    default:
+      // Use standard fonts for LTR languages
+      break;
+  }
+}
+
+function getVisionText(language) {
+  const texts = {
+    fr: "BROOLYKID accompagne les familles à travers un voyage complet : purification des terrains, activation des capacités sensorielles, et création d'un environnement vibratoire cohérent pour permettre à l'enfant de se déployer avec conscience.",
+    en: "BROOLYKID accompanies families through a complete journey: terrain purification, sensory capacity activation, and creation of a coherent vibratory environment to allow the child to unfold with consciousness.",
+    ar: "يرافق بروليكيد العائلات عبر رحلة شاملة: تنقية التربة، وتفعيل القدرات الحسية، وخلق بيئة اهتزازية متماسكة للسماح للطفل بالتطور بوعي.",
+    he: "ברוליקיד מלווה משפחות במסע מלא: טיהור השטח, הפעלת יכולות חושיות, ויצירת סביבה ויברציונית קוהרנטית לאפשר לילד להתפתח במודעות.",
+    es: "BROOLYKID acompaña a las familias a través de un viaje completo: purificación del terreno, activación de capacidades sensoriales, y creación de un entorno vibratorio coherente para permitir que el niño se despliegue con conciencia.",
+    fa: "برولیکید خانواده‌ها را در یک سفر کامل همراهی می‌کند: پاکسازی زمین، فعال‌سازی ظرفیت‌های حسی، و ایجاد محیط ارتعاشی منسجم برای اجازه دادن به کودک برای گسترش با آگاهی.",
+  };
+  return texts[language] || texts.fr;
+}
+
+function getEvidenceText(language) {
+  const texts = {
+    fr: "Les études internationales confirment l'impact des pratiques vibratoires et spirituelles sur le développement intégral de l'enfant. Les données montrent une réduction de 40% des troubles comportementaux et une augmentation de 60% de la résilience émotionnelle.",
+    en: "International studies confirm the impact of vibratory and spiritual practices on the integral development of the child. Data shows a 40% reduction in behavioral disorders and a 60% increase in emotional resilience.",
+    ar: "تؤكد الدراسات الدولية تأثير الممارسات الاهتزازية والروحية على التطور المتكامل للطفل. تظهر البيانات انخفاضًا بنسبة 40% في الاضطرابات السلوكية وزيادة بنسبة 60% في المرونة العاطفية.",
+    he: "מחקרים בינלאומיים מאשרים את ההשפעה של פרקטיקות ויברציוניות ורוחניות על ההתפתחות האינטגרלית של הילד. הנתונים מראים ירידה של 40% בהפרעות התנהגותיות ועלייה של 60% בחוסן הרגשי.",
+    es: "Los estudios internacionales confirman el impacto de las prácticas vibratorias y espirituales en el desarrollo integral del niño. Los datos muestran una reducción del 40% en los trastornos conductuales y un aumento del 60% en la resiliencia emocional.",
+    fa: "مطالعات بین‌المللی تأثیر تمرینات ارتعاشی و معنوی بر رشد یکپارچه کودک را تأیید می‌کند. داده‌ها کاهش 40% در اختلالات رفتاری و افزایش 60% در تاب‌آوری عاطفی را نشان می‌دهد.",
+  };
+  return texts[language] || texts.fr;
 }
 
 // Loading screen management
@@ -798,6 +1168,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initSmoothScroll();
   buildPhases();
   initReveals();
+  initPDFGenerator();
 });
 
 window.addEventListener("load", () => {
