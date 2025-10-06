@@ -342,9 +342,16 @@ function initThreeScene() {
     canvas,
     antialias: true,
     alpha: true,
+    powerPreference: "high-performance",
   });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setSize(window.innerWidth, window.innerHeight);
+
+  // Performance optimizations
+  renderer.shadowMap.enabled = false;
+  renderer.outputEncoding = THREE.sRGBEncoding;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.2;
 
   const scene = new THREE.Scene();
   scene.fog = new THREE.Fog(0x050b17, 6, 26);
@@ -423,7 +430,8 @@ function initThreeScene() {
 
   // Enhanced particle system with multiple layers
   const starGeometry = new THREE.BufferGeometry();
-  const starCount = 1200;
+  const isMobile = window.innerWidth < 768;
+  const starCount = isMobile ? 600 : 1200;
   const positions = new Float32Array(starCount * 3);
   const colors = new Float32Array(starCount * 3);
   const sizes = new Float32Array(starCount);
@@ -481,7 +489,8 @@ function initThreeScene() {
     blending: THREE.AdditiveBlending,
   });
 
-  for (let i = 0; i < 15; i += 1) {
+  const orbCount = isMobile ? 8 : 15;
+  for (let i = 0; i < orbCount; i += 1) {
     const orb = new THREE.Mesh(orbGeometry, orbMaterial.clone());
     orb.position.set(
       (Math.random() - 0.5) * 25,
@@ -771,6 +780,19 @@ function setupScrollMotion({
   ScrollTrigger.refresh();
 }
 
+// Loading screen management
+function hideLoadingScreen() {
+  const loadingScreen = document.getElementById("loading-screen");
+  if (loadingScreen) {
+    setTimeout(() => {
+      loadingScreen.classList.add("hidden");
+      setTimeout(() => {
+        loadingScreen.style.display = "none";
+      }, 500);
+    }, 2000); // Show loading for at least 2 seconds
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   initNavigation();
   initSmoothScroll();
@@ -780,4 +802,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
 window.addEventListener("load", () => {
   initThreeScene();
+  hideLoadingScreen();
 });
