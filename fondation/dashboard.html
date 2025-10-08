@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - La Fondation BROOLYKID</title>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="styles/fondation.css">
+  <link rel="stylesheet" href="styles/dashboard.css">
+</head>
+<body class="dashboard-page">
+  
+  <!-- Top Navigation -->
+  <nav class="dashboard-nav">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo">
+        <span class="gradient-text">BROOLYKID</span>
+      </a>
+      
+      <div class="nav-menu">
+        <a href="dashboard.html" class="nav-link active">
+          <span class="nav-icon">📊</span> Dashboard
+        </a>
+        <a href="#" id="broolyai-link" class="nav-link">
+          <span class="nav-icon">🤖</span> BroolyAI
+        </a>
+        <a href="#" id="logout-link" class="nav-link">
+          <span class="nav-icon">🚪</span> Déconnexion
+        </a>
+      </div>
+
+      <div class="user-info">
+        <span id="user-name">Chargement...</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Dashboard -->
+  <main class="dashboard-main">
+    <div class="dashboard-container">
+      
+      <!-- Header -->
+      <header class="dashboard-header">
+        <div class="header-content">
+          <h1 class="gradient-text">Tableau de Bord</h1>
+          <p class="subtitle">Suivez la progression de vos enfants</p>
+        </div>
+        <button id="add-child-btn" class="btn-primary">
+          <span>➕</span> Ajouter un enfant
+        </button>
+      </header>
+
+      <!-- Stats Overview -->
+      <section class="stats-section">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon">👶</div>
+            <div class="stat-content">
+              <div class="stat-value" id="total-children">0</div>
+              <div class="stat-label">Enfants</div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">📈</div>
+            <div class="stat-content">
+              <div class="stat-value" id="total-progress">0%</div>
+              <div class="stat-label">Progression Moyenne</div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">✅</div>
+            <div class="stat-content">
+              <div class="stat-value" id="total-activities">0</div>
+              <div class="stat-label">Activités</div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">🎯</div>
+            <div class="stat-content">
+              <div class="stat-value" id="total-milestones">0</div>
+              <div class="stat-label">Étapes Clés</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Children Profiles -->
+      <section class="profiles-section">
+        <h2 class="section-title">Profils des Enfants</h2>
+        <div id="profiles-container" class="profiles-grid">
+          <!-- Profiles will be loaded here -->
+        </div>
+      </section>
+
+      <!-- Recent Activities -->
+      <section class="activities-section">
+        <h2 class="section-title">Activités Récentes</h2>
+        <div id="recent-activities" class="activities-list">
+          <!-- Activities will be loaded here -->
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Add Child Modal -->
+  <div id="add-child-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <span class="modal-close">&times;</span>
+      <h2>Ajouter un Enfant</h2>
+      
+      <form id="add-child-form">
+        <div class="form-group">
+          <label for="child-name">Prénom de l'enfant *</label>
+          <input type="text" id="child-name" required autocomplete="off">
+        </div>
+
+        <div class="form-group">
+          <label for="birth-date">Date de naissance *</label>
+          <input type="date" id="birth-date" required>
+        </div>
+
+        <div class="form-group">
+          <label for="child-gender">Genre</label>
+          <select id="child-gender">
+            <option value="">Non spécifié</option>
+            <option value="male">Garçon</option>
+            <option value="female">Fille</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="current-phase">Phase Actuelle *</label>
+          <select id="current-phase" required>
+            <option value="Alpha">Phase Alpha - Préconception</option>
+            <option value="Bêta">Phase Bêta - Grossesse</option>
+            <option value="Charlie">Phase Charlie - Naissance (J1-3)</option>
+            <option value="Delta">Phase Delta - Fondation (J4-10)</option>
+            <option value="Echo">Phase Echo - Programmation (J11-30)</option>
+            <option value="Foxtrot">Phase Foxtrot - Conscience (M2-12)</option>
+            <option value="Golf">Phase Golf - Développement (1-7 ans)</option>
+            <option value="Hotel">Phase Hotel - Intégration</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="child-notes">Notes / Défis particuliers</label>
+          <textarea id="child-notes" rows="3" placeholder="Challenges, préférences, notes..."></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" id="cancel-add-child">Annuler</button>
+          <button type="submit" class="btn-primary">Créer le Profil</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- BroolyAI Sidebar -->
+  <div id="broolyai-sidebar" class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-title">
+        <div class="broolyai-avatar">🤖</div>
+        <div>
+          <h3>BroolyAI</h3>
+          <p class="sidebar-subtitle">Votre assistant personnel</p>
+        </div>
+      </div>
+      <button id="close-sidebar" class="btn-icon" aria-label="Fermer">✕</button>
+    </div>
+
+    <div class="sidebar-body">
+      <!-- Child Selector -->
+      <div class="child-selector">
+        <label for="chat-profile-selector">Contexte enfant:</label>
+        <select id="chat-profile-selector">
+          <option value="">Général</option>
+          <!-- Populated dynamically -->
+        </select>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="quick-actions">
+        <button class="quick-action-btn" data-action="phase-guidance">
+          📚 Conseils Phase Actuelle
+        </button>
+        <button class="quick-action-btn" data-action="suggest-activities">
+          💡 Suggérer Activités
+        </button>
+      </div>
+
+      <!-- Chat Container -->
+      <div id="chat-container" class="chat-container">
+        <!-- Messages will be loaded here -->
+      </div>
+
+      <!-- Chat Input -->
+      <div class="chat-input-container">
+        <textarea 
+          id="chat-input" 
+          placeholder="Posez votre question..."
+          rows="2"
+        ></textarea>
+        <button id="send-chat-btn" class="btn-icon send-btn" aria-label="Envoyer">
+          ➤
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/broolyai.js"></script>
+</body>
+</html>
+

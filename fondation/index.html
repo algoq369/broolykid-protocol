@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La Fondation BROOLYKID</title>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="styles/fondation.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="main-nav">
+    <a href="../index.html" class="nav-logo">
+      <span class="gradient-text">BROOLYKID</span>
+    </a>
+    <div class="nav-links">
+      <a href="../index.html">Accueil</a>
+      <a href="../index.html#phases">Phases</a>
+      <a href="index.html" class="active">La Fondation</a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="fondation-hero">
+    <div class="hero-container">
+      <h1 class="gradient-text">✨ La Fondation BROOLYKID</h1>
+      <p class="hero-subtitle">
+        Suivez l'évolution de vos enfants à travers les 8 phases du protocole<br>
+        Avec l'assistance de <strong>BroolyAI</strong>, votre guide personnel
+      </p>
+      
+      <div class="cta-buttons">
+        <button id="login-btn" class="btn-primary">
+          🔐 Se connecter
+        </button>
+        <button id="register-btn" class="btn-secondary">
+          ✨ Créer un compte
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features-section">
+    <div class="container">
+      <h2 class="section-title">Fonctionnalités de La Fondation</h2>
+      
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">👶</div>
+          <h3>Profils Enfants</h3>
+          <p>Créez un profil pour chaque enfant et suivez sa progression unique à travers les 8 phases du protocole</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">📊</div>
+          <h3>Suivi de Progression</h3>
+          <p>Visualisez les avancées dans chaque phase avec des barres de progression et des statistiques détaillées</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">🤖</div>
+          <h3>BroolyAI Assistant</h3>
+          <p>Posez vos questions et recevez des conseils personnalisés basés sur l'âge et la phase de votre enfant</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">📝</div>
+          <h3>Journal d'Activités</h3>
+          <p>Enregistrez les pratiques, rituels et étapes importantes pour garder une trace de l'évolution</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🎯</div>
+          <h3>Étapes Clés</h3>
+          <p>Marquez les milestones importants et célébrez les progrès de votre enfant</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🌈</div>
+          <h3>Protocole Complet</h3>
+          <p>Accès à toutes les phases: Alpha, Bêta, Charlie, Delta, Echo, Foxtrot, Golf, Hotel</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Auth Modal -->
+  <div id="auth-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      
+      <!-- Login Form -->
+      <div id="login-form" class="auth-form">
+        <h2>Connexion</h2>
+        <form>
+          <input type="email" id="login-email" placeholder="Email" required autocomplete="email">
+          <input type="password" id="login-password" placeholder="Mot de passe" required autocomplete="current-password">
+          <button type="submit" class="btn-primary">Se connecter</button>
+        </form>
+        <p class="switch-auth">
+          Pas de compte ? <a href="#" id="show-register">Créer un compte</a>
+        </p>
+      </div>
+
+      <!-- Register Form -->
+      <div id="register-form" class="auth-form" style="display: none;">
+        <h2>Créer un compte</h2>
+        <form>
+          <input type="text" id="register-firstname" placeholder="Prénom" required autocomplete="given-name">
+          <input type="text" id="register-lastname" placeholder="Nom" required autocomplete="family-name">
+          <input type="email" id="register-email" placeholder="Email" required autocomplete="email">
+          <input type="password" id="register-password" placeholder="Mot de passe (min. 6 caractères)" required autocomplete="new-password">
+          <button type="submit" class="btn-primary">S'inscrire</button>
+        </form>
+        <p class="switch-auth">
+          Déjà un compte ? <a href="#" id="show-login">Se connecter</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>
+

@@ -36,4 +36,3 @@ echo "4. Testez localement : npm run dev"
 echo "5. Suivez FONDATION_IMPLEMENTATION_GUIDE.md pour le déploiement"
 echo ""
 echo "✨ La structure est prête !"
-
