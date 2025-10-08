@@ -1,7 +1,7 @@
 # 🎨 BROOLYKID Protocol - Quick Expert Review Summary
 
-**Project:** Interactive 3D Website + Multi-language PDF Generation  
-**Live:** https://algoq369.github.io/broolykid-protocol/  
+**Project:** Interactive 3D Website + Multi-language PDF Generation
+**Live:** https://algoq369.github.io/broolykid-protocol/
 **Stack:** HTML5 + CSS3 + Vanilla JS + Three.js + GSAP
 
 ---
@@ -123,7 +123,7 @@ function initThreeScene() {
     antialias: !isMobile,
     powerPreference: "high-performance"
   });
-  
+
   // 300+ lines of scene setup...
   // Is this structure maintainable?
 }

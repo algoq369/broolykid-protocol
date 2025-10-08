@@ -21,12 +21,12 @@ def extract_pdf_content(pdf_path):
         with open(pdf_path, 'rb') as file:
             pdf_reader = PyPDF2.PdfReader(file)
             text_content = ""
-            
+
             for page_num in range(len(pdf_reader.pages)):
                 page = pdf_reader.pages[page_num]
                 text_content += f"\n--- Page {page_num + 1} ---\n"
                 text_content += page.extract_text()
-            
+
             return text_content
     except Exception as e:
         print(f"Error reading PDF: {e}")
@@ -34,7 +34,7 @@ def extract_pdf_content(pdf_path):
 
 def create_translation_structure(content):
     """Create translation structure for the website"""
-    
+
     # Split content into logical sections
     sections = {
         "title": "BROOLYKID Protocol",
@@ -46,17 +46,17 @@ def create_translation_structure(content):
         "implementation": "",
         "conclusion": ""
     }
-    
+
     # Basic content parsing (you can enhance this)
     lines = content.split('\n')
     current_section = "introduction"
     current_text = ""
-    
+
     for line in lines:
         line = line.strip()
         if not line:
             continue
-            
+
         # Detect sections based on keywords
         if any(keyword in line.lower() for keyword in ['phase', 'étape', 'step']):
             if current_text:
@@ -85,16 +85,16 @@ def create_translation_structure(content):
             current_text = line + "\n"
         else:
             current_text += line + "\n"
-    
+
     # Add the last section
     if current_text:
         sections[current_section] = current_text.strip()
-    
+
     return sections
 
 def create_translations(content_sections):
     """Create translations for different languages"""
-    
+
     translations = {
         "en": {
             "title": "BROOLYKID Protocol",
@@ -157,41 +157,41 @@ def create_translations(content_sections):
             "conclusion": content_sections.get("conclusion", "خلاصه و مراحل بعدی.")
         }
     }
-    
+
     return translations
 
 def main():
     pdf_path = "/Users/sheirraza/Desktop/hustle/life/lifes/BROOLYKIDPDF.pdf"
-    
+
     if not os.path.exists(pdf_path):
         print(f"PDF file not found: {pdf_path}")
         return
-    
+
     print("Extracting content from PDF...")
     content = extract_pdf_content(pdf_path)
-    
+
     if not content:
         print("Failed to extract content from PDF")
         return
-    
+
     print("Creating translation structure...")
     sections = create_translation_structure(content)
-    
+
     print("Generating translations...")
     translations = create_translations(sections)
-    
+
     # Save raw content
     with open("pdf-content.txt", "w", encoding="utf-8") as f:
         f.write(content)
-    
+
     # Save translations
     with open("translations.json", "w", encoding="utf-8") as f:
         json.dump(translations, f, ensure_ascii=False, indent=2)
-    
+
     # Save sections
     with open("content-sections.json", "w", encoding="utf-8") as f:
         json.dump(sections, f, ensure_ascii=False, indent=2)
-    
+
     print("✅ Content extracted and translations created!")
     print("📁 Files created:")
     print("  - pdf-content.txt (raw PDF content)")
@@ -200,3 +200,9 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+
+
+
+

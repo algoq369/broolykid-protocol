@@ -14,17 +14,17 @@ def clean_text(text):
     text = re.sub(r'Page\s+\d+\s+of\s+\d+', '', text)
     text = re.sub(r'--- Page \d+ ---', '', text)
     text = re.sub(r'Page\s+of\s+\d+', '', text)
-    
+
     # Clean up extra whitespace
     text = re.sub(r'\s+', ' ', text)
     text = re.sub(r'\n\s*\n', '\n\n', text)
-    
+
     return text.strip()
 
 def extract_phases_from_content(content):
     """Extract phase information from the PDF content"""
     phases = []
-    
+
     # Define phase patterns
     phase_patterns = [
         (r'🧬 Phase Alpha[^:]*:([^🌟]+)', 'Alpha', 'Fondation Préconceptionnelle'),
@@ -36,7 +36,7 @@ def extract_phases_from_content(content):
         (r'🧠 Phase Golf[^:]*:([^🌀]+)', 'Golf', 'Développement Avancé'),
         (r'🌀 Phase Hotel[^:]*:([^✨]+)', 'Hotel', 'Intégration Vibratoire')
     ]
-    
+
     for pattern, phase_id, phase_name in phase_patterns:
         match = re.search(pattern, content, re.DOTALL)
         if match:
@@ -46,24 +46,24 @@ def extract_phases_from_content(content):
                 'name': phase_name,
                 'description': description[:500] + '...' if len(description) > 500 else description
             })
-    
+
     return phases
 
 def create_comprehensive_translations():
     """Create comprehensive translations based on the PDF content"""
-    
+
     # Read the extracted content
     with open('pdf-content.txt', 'r', encoding='utf-8') as f:
         content = f.read()
-    
+
     # Extract phases
     phases = extract_phases_from_content(content)
-    
+
     # Clean content sections
     introduction = clean_text(content[:2000])
     evidence = clean_text(content[2000:4000])
     methodology = clean_text(content[4000:6000])
-    
+
     translations = {
         "en": {
             "title": "BROOLYKID Protocol",
@@ -126,18 +126,18 @@ def create_comprehensive_translations():
             "conclusion": "این پروتکل نمایانگر رویکردی انقلابی برای بهینه‌سازی رشد انسانی است. نیاز به تعهد، صبر و سازگاری مداوم دارد، اما نتایج از نظر بیداری آگاهانه و پتانسیل محقق شده، سرمایه‌گذاری را به طور گسترده توجیه می‌کند."
         }
     }
-    
+
     return translations
 
 def main():
     print("Creating comprehensive translations from PDF content...")
-    
+
     translations = create_comprehensive_translations()
-    
+
     # Save comprehensive translations
     with open("comprehensive-translations.json", "w", encoding="utf-8") as f:
         json.dump(translations, f, ensure_ascii=False, indent=2)
-    
+
     # Create a simplified version for the website
     website_translations = {}
     for lang, content in translations.items():
@@ -151,10 +151,10 @@ def main():
             "implementation": content["implementation"],
             "conclusion": content["conclusion"]
         }
-    
+
     with open("website-translations.json", "w", encoding="utf-8") as f:
         json.dump(website_translations, f, ensure_ascii=False, indent=2)
-    
+
     print("✅ Comprehensive translations created!")
     print("📁 Files created:")
     print("  - comprehensive-translations.json (full content)")
@@ -164,3 +164,9 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+
+
+
+

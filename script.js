@@ -1065,7 +1065,7 @@ const translations = {
         description: "Détoxification biologique (foie, reins, lymphe), nutrition quantique & Oméga-3 intelligents, protection énergétique & purification des ondes (EMF), pratiques de couple, héritage ancestral, activation de l'ADN, glande pinéale & vision intérieure."
       },
       {
-        id: "Beta", 
+        id: "Beta",
         name: "Grossesse Sacrée",
         description: "Trimestres 1 à 3 : sécurité, conscience, communication subtile, interface télépathique mère-enfant, immersion sonore, visualisation prénatale, nutrition vibratoire et hygiène énergétique."
       },
@@ -1076,7 +1076,7 @@ const translations = {
       },
       {
         id: "Delta",
-        name: "Fondation Quantique", 
+        name: "Fondation Quantique",
         description: "Développement du microbiome, massage sacré, stimulation vestibulaire, bain sonore, lumière douce & sécurité vibratoire, alignement post-naissance."
       },
       {
@@ -1105,7 +1105,7 @@ const translations = {
   },
   en: {
     title: "BROOLYKID Protocol",
-    subtitle: "Advanced Child Development Program", 
+    subtitle: "Advanced Child Development Program",
     vision: "This protocol represents a revolutionary approach to human development optimization. It requires commitment, patience and constant adaptation, but the results in terms of conscious awakening and actualized potential largely justify the investment.",
     phases: [
       {
@@ -1115,7 +1115,7 @@ const translations = {
       },
       {
         id: "Beta",
-        name: "Sacred Pregnancy", 
+        name: "Sacred Pregnancy",
         description: "Trimesters 1-3: security, consciousness, subtle communication, mother-child telepathic interface, sound immersion, prenatal visualization, vibrational nutrition and energetic hygiene."
       },
       {
@@ -1129,7 +1129,7 @@ const translations = {
         description: "Microbiome development, sacred massage, vestibular stimulation, sound bath, soft light & vibrational security, post-birth alignment."
       },
       {
-        id: "Echo", 
+        id: "Echo",
         name: "Fundamental Programming",
         description: "Sensory and neuro-emotional development, vibrational breastfeeding nutrition, energetic massage, meridians, cranial stimulation, day/night cycle harmonization."
       },
@@ -1145,7 +1145,7 @@ const translations = {
       },
       {
         id: "Hotel",
-        name: "Vibrational Integration", 
+        name: "Vibrational Integration",
         description: "Summary of steps (Alpha to Golf), practical tables: nutrition, frequency, care, sacred synthesis and complete integration."
       }
     ],
@@ -1168,7 +1168,7 @@ const translations = {
         description: "الثلث الأول إلى الثالث: الأمان، الوعي، التواصل الدقيق، واجهة التخاطر بين الأم والطفل، الغمر الصوتي، التصور قبل الولادة، التغذية الاهتزازية والنظافة الطاقية."
       },
       {
-        id: "Charlie", 
+        id: "Charlie",
         name: "الولادة المقدسة",
         description: "خلق مساحة ترحيب مقدسة، مراسم المرور والبصمة الاهتزازية، الرعاية الأولية: اللبأ، القحفي العجزي، الضوء الأحمر، الحضور، الترسيخ، الاعتراف بالروح."
       },
@@ -1179,7 +1179,7 @@ const translations = {
       },
       {
         id: "Echo",
-        name: "البرمجة الأساسية", 
+        name: "البرمجة الأساسية",
         description: "التطوير الحسي والعصبي العاطفي، التغذية بالرضاعة الاهتزازية، التدليك الطاقي، خطوط الطول، التحفيز القحفي، توازن دورات النهار والليل."
       },
       {
@@ -1553,7 +1553,7 @@ function getEvidenceText(language) {
 function getPhasesText(language) {
   const translation = translations[language] || translations.fr;
   if (translation.phases && Array.isArray(translation.phases)) {
-    return translation.phases.map(phase => 
+    return translation.phases.map(phase =>
       `${phase.name}: ${phase.description}`
     ).join('\n\n');
   }
